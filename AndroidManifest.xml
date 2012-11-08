@@ -12,13 +12,30 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
-            android:label="@string/title_activity_main" >
+            android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".CategoryActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="bit.app.need4feed.MainActivity" />
+        </activity>
+        <activity
+            android:name=".FeedActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="bit.app.need4feed.CategoryActivity" />
+        </activity>
+        <activity
+            android:name=".PostActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="bit.app.need4feed.FeedActivity" />
         </activity>
     </application>
 
