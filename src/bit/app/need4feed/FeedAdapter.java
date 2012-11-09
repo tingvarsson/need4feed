@@ -39,7 +39,7 @@ public class FeedAdapter extends BaseAdapter
 	public long getItemId( int position ) 
 	{
 		// TODO: Used for? this.feedList.get( position ).getId );
-				return( position );
+		return( position );
 	}
 	
 	public static class ViewHolder 
@@ -63,7 +63,7 @@ public class FeedAdapter extends BaseAdapter
 			holder = (ViewHolder)vi.getTag();
 		}
 
-		holder.label.setText( feedList.get( position ).getName() );
+		holder.label.setText( feedList.get( position ).getTitle() );
 
 		return( vi );
 	}

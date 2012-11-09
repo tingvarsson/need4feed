@@ -4,9 +4,12 @@ public class Feed
 {
 	protected long id;
 	protected long categoryId;
-	protected String name;
+	protected String title;
+	protected String link;
+	// TODO: Also available, do we need/want it? protected String description;
 	
-	public Feed( String name ) { this.name = name; }
+	// TODO: Add url to constructor
+	public Feed( String title ) { this.title = title; }
 	
 	public long getId() { return( this.id ); }
 	public void setId( long id ) { this.id = id; }
@@ -14,6 +17,9 @@ public class Feed
 	public long getCategoryId() { return( this.categoryId ); }
 	public void setCategoryId( long categoryId ) { this.categoryId = categoryId; }
 	
-	public String getName() { return( this.name ); }
-	public void setName( String name ) { this.name = name; }
+	public String getTitle() { return( this.title ); }
+	public void setTitle( String title ) { this.title = title; }
+	
+	public String getLink() { return( this.link ); }
+	public void setLink( String link ) { this.link = link; }
 }
