@@ -25,7 +25,6 @@ public class CategoryActivity extends Activity
     {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_category );
-        //getActionBar().setDisplayHomeAsUpEnabled( true );
         
         feedListView = (ListView)findViewById( R.id.feedListView );
         

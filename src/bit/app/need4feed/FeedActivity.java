@@ -25,7 +25,6 @@ public class FeedActivity extends Activity
     {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_feed );
-        //getActionBar().setDisplayHomeAsUpEnabled( true );
         
         postListView = (ListView)findViewById( R.id.postListView );
         
