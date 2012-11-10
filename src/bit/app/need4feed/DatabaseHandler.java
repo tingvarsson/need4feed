@@ -8,6 +8,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class DatabaseHandler extends SQLiteOpenHelper 
 {
@@ -48,7 +49,7 @@ public class DatabaseHandler extends SQLiteOpenHelper
     }
     
 	@Override
-	public void onCreate(SQLiteDatabase db) 
+	public void onCreate( SQLiteDatabase db ) 
 	{
 		String CREATE_CATEGORIES_TABLE = "CREATE TABLE " + TABLE_CATEGORIES + 
 			   "(" + KEY_CATEGORY_ID + " INTEGER PRIMARY KEY ASC, " + 
@@ -77,15 +78,15 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	}
 
 	@Override
-	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) 
+	public void onUpgrade( SQLiteDatabase db, int oldVersion, int newVersion ) 
 	{
 		// Drop older tables if existed
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORIES);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_FEEDS);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_POSTS);
+        db.execSQL( "DROP TABLE IF EXISTS " + TABLE_CATEGORIES );
+        db.execSQL( "DROP TABLE IF EXISTS " + TABLE_FEEDS );
+        db.execSQL( "DROP TABLE IF EXISTS " + TABLE_POSTS );
  
         // Create tables again
-        onCreate(db);
+        onCreate( db );
 	}
 	
 	
@@ -98,6 +99,9 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	 
 	    //  Insert the row, returned is the rowid used as category id
 	    c.setId( db.insert( TABLE_CATEGORIES, null, values ) );
+	    
+	    Log.d( "Database Handler", "Category added, id: " + 
+	           Long.toString( c.getId() ) + " , name: " + c.getName() );
 	    
 	    db.close();
 	}
@@ -113,6 +117,10 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	 
 	    //  Insert the row, returned is the rowid used as feed id
 	    f.setId( db.insert( TABLE_FEEDS, null, values ) );
+	    
+	    Log.d( "Database Handler", "Feed added, id: " + Long.toString( f.getId() ) +
+	    	   " , title: " + f.getTitle() + " , link: " + f.getLink() + 
+	    	   " , category id: " + Long.toString( f.getCategoryId() ) );
 	    
 	    db.close();
 	}
@@ -132,6 +140,12 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	    //  Insert the row, returned is the rowid used as feed id
 	    p.setId( db.insert( TABLE_POSTS, null, values ) );
 	    
+	    Log.d( "Database Handler", "Post added, id: " + Long.toString( p.getId() ) +
+	    	   " , title: " + p.getTitle() + " , link: " + p.getLink() + 
+	    	   " , description: " + p.getDescription() + " , pubdate: " + 
+	    	   p.getPubDate() + " , thumbnail: " + p.getThumbnail() + 
+	    	   " , category id: " + Long.toString( p.getFeedId() ) );
+	    
 	    db.close();
 	}
 	
@@ -140,7 +154,7 @@ public class DatabaseHandler extends SQLiteOpenHelper
 		SQLiteDatabase db = this.getWritableDatabase();
 		 
 	    ContentValues values = new ContentValues();
-	    values.put(KEY_CATEGORY_NAME, c.getName() );
+	    values.put( KEY_CATEGORY_NAME, c.getName() );
 	 
 	    // updating row
 	    return db.update( TABLE_CATEGORIES, values, KEY_CATEGORY_ID + " = ?",
@@ -335,5 +349,18 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	                       cursor.getString( 5 ) );
 		
 		return( p );
+	}
+	
+	public int getPostCount()
+	{
+		String countQuery = "SELECT  * FROM " + TABLE_POSTS;
+		
+        SQLiteDatabase db = this.getReadableDatabase();
+        
+        Cursor cursor = db.rawQuery(countQuery, null);
+        cursor.close();
+ 
+        // return count
+        return( cursor.getCount() );
 	}
 }

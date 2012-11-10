@@ -44,20 +44,20 @@ class RssHandler extends DefaultHandler
 			( currentPost.getTitle() == null ) )
 		{
 			currentPost.setTitle( chars.toString() );
-
 		}
+		
 		if( ( localName.equalsIgnoreCase( "pubDate" ) ) &&
 			( currentPost.getPubDate() == null ) )
 		{
 			currentPost.setPubDate( chars.toString() );
-
 		}
+		
 		if( ( localName.equalsIgnoreCase( "thumbnail" ) ) &&
 			( currentPost.getThumbnail() == null ) ) 
 		{
 			currentPost.setThumbnail( chars.toString() );
-
 		}
+		
 		if( ( localName.equalsIgnoreCase( "link" ) ) &&
 			( currentPost.getLink() == null ) )
 		{
@@ -66,7 +66,8 @@ class RssHandler extends DefaultHandler
 
 		if( localName.equalsIgnoreCase( "item" ) ) 
 		{
-			postList.add(currentPost);
+			Log.d( "RSS Handler", "Post added." );
+			postList.add( currentPost );
 			currentPost = new Post();
 		}
 	}
@@ -91,14 +92,16 @@ class RssHandler extends DefaultHandler
 			url = new URL( feedLink );
 
 			xr.setContentHandler( this );
+			Log.d( "RSS Handler", "Fetching: " + feedLink );
 			xr.parse( new InputSource( url.openStream() ) );
+			Log.d( "RSS Handler", "Fetch complete." );
 
 		} catch ( IOException e ) {
-			Log.e("RSS Handler IO", e.getMessage() + " >> " + e.toString());
+			Log.e( "RSS Handler IO", e.getMessage() + " >> " + e.toString() );
 		} catch ( SAXException e ) {
-			Log.e("RSS Handler SAX", e.toString());
+			Log.e( "RSS Handler SAX", e.toString() );
 		} catch ( ParserConfigurationException e ) {
-			Log.e("RSS Handler Parser Config", e.toString());
+			Log.e( "RSS Handler Parser Config", e.toString() );
 		}
 
 		return( postList );
