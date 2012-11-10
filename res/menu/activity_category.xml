@@ -3,4 +3,6 @@
         android:title="@string/menu_settings"
         android:orderInCategory="100"
         android:showAsAction="never" />
+    <item android:id="@+id/menu_add_feed" android:title="@string/menu_add_feed" android:showAsAction="ifRoom"></item>
+    <item android:id="@+id/menu_remove_category" android:title="@string/menu_remove_category" android:showAsAction="ifRoom"></item>
 </menu>
