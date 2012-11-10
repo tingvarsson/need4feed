@@ -1,10 +1,13 @@
 package bit.app.need4feed;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.webkit.WebView;
 import android.widget.TextView;
 import android.support.v4.app.NavUtils;
@@ -15,7 +18,8 @@ public class PostActivity extends Activity
 	TextView feedTextView;
 	WebView contentWebView;
 	
-	Post currentPost;
+	Feed sourceFeed;
+	Post displayedPost;
 
     @Override
     public void onCreate( Bundle savedInstanceState ) 
@@ -32,16 +36,28 @@ public class PostActivity extends Activity
         int postId = intent.getIntExtra( FeedActivity.POST_ID, 0 );
         
         // TODO: Fetch the post with postId
-        currentPost = new Post( "Testeru", "Test as well" );
+        displayedPost = new Post();
         
         // Insert title, feed and content in the view
-        titleTextView.setText( currentPost.getTitle() );
+        titleTextView.setText( "Post Title" );//displayedPost.getTitle() );
         
-        // TODO: Change so it fetched the name of the feed
-        feedTextView.setText( "From random feed" );
+        // TODO: Fetch feed to show feed's name as a subtitle
+        feedTextView.setText( "From random feed" );//sourceFeed.getTitle() );
         
-        contentWebView.loadData( currentPost.description, 
+        contentWebView.loadData( displayedPost.getDescription(), 
         		                 "text/html; charset=UTF-8", null);
+        
+        // Clicking the title will open the web browser and take the user
+        // to the specific post
+        titleTextView.setOnClickListener( new OnClickListener()
+        {
+        	public void onClick( View view )
+        	{
+        		Intent intent = new Intent( Intent.ACTION_VIEW).setData( 
+        				                    Uri.parse("http://www.sweclockers.com/feeds/news.xml" ) );//displayedPost.getLink() ) );
+				startActivity(intent);
+        	}
+        } );
     }
 
     @Override

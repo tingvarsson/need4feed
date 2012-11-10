@@ -10,9 +10,6 @@ public class Post
 	protected String pubDate;
 	protected String thumbnail;
 	
-	//temp constructor to create temp posts
-	public Post( String title, String description ) { this.title = title; this.description = description; }
-	
 	public long getId() { return( this.id ); }
 	public void setId( long id ) { this.id = id; }
 	

@@ -18,7 +18,7 @@ public class FeedActivity extends Activity
 	public final static String POST_ID = "bit.app.need4feed.POST_ID";
 	
 	ListView postListView;
-	ArrayList<Post> postList = new ArrayList<Post>();
+	ArrayList<Post> postList;
 
     @Override
     public void onCreate( Bundle savedInstanceState ) 
@@ -33,22 +33,8 @@ public class FeedActivity extends Activity
         int feedId = intent.getIntExtra( CategoryActivity.FEED_ID, 0 );
         
         // TODO: Fetch posts for feedId, for now a dummy list
-        postList.add( new Post( "Post A", "post details" ) );
-        postList.add( new Post( "Post B", "post details" ) );
-        postList.add( new Post( "Post C", "post details" ) );
-        postList.add( new Post( "Post D", "post details" ) );
-        postList.add( new Post( "Post E", "post details" ) );
-        postList.add( new Post( "Post F", "post details" ) );
-        postList.add( new Post( "Post G", "post details" ) );
-        postList.add( new Post( "Post H", "post details" ) );
-        postList.add( new Post( "Post A", "post details" ) );
-        postList.add( new Post( "Post B", "post details" ) );
-        postList.add( new Post( "Post C", "post details" ) );
-        postList.add( new Post( "Post D", "post details" ) );
-        postList.add( new Post( "Post E", "post details" ) );
-        postList.add( new Post( "Post F", "post details" ) );
-        postList.add( new Post( "Post G", "post details" ) );
-        postList.add( new Post( "Post H", "post details" ) );
+        RssHandler rssHandler = new RssHandler();
+        postList = rssHandler.getLatestPosts( "http://www.sweclockers.com/feeds/news.xml" );
         
         postListView.setOnItemClickListener( new OnItemClickListener() 
         {
