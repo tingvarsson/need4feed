@@ -1,19 +1,23 @@
 package bit.app.need4feed;
 
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Activity;
 import android.content.Intent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.WebView;
 import android.widget.TextView;
-import android.support.v4.app.NavUtils;
 
-public class PostActivity extends Activity 
+public class PostActivity extends SherlockActivity 
 {
+	ActionBar actionBar;
+	
 	TextView titleTextView;
 	TextView feedTextView;
 	WebView contentWebView;
@@ -26,6 +30,7 @@ public class PostActivity extends Activity
     {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_post );
+        actionBar = getSupportActionBar();
         
         titleTextView = (TextView)findViewById( R.id.titleTextView );
         feedTextView = (TextView)findViewById( R.id.sourceTextView );
@@ -59,23 +64,28 @@ public class PostActivity extends Activity
         	}
         } );
     }
-
+    
     @Override
     public boolean onCreateOptionsMenu( Menu menu ) 
     {
-        getMenuInflater().inflate( R.menu.activity_post, menu );
-        return true;
+        MenuInflater inflater = getSupportMenuInflater();
+        inflater.inflate( R.menu.activity_post, menu );
+        return( true );
     }
- 
+     
+    public boolean onPrepareOptionsMenu( Menu menu )
+    {
+        return( super.onPrepareOptionsMenu( menu ) );
+    }
+
     @Override
     public boolean onOptionsItemSelected( MenuItem item ) 
     {
-        switch( item.getItemId() ) 
+        if( item.getItemId() == R.id.menu_settings ) 
         {
-            case android.R.id.home:
-                NavUtils.navigateUpFromSameTask( this );
-                return true;
+
         }
-        return super.onOptionsItemSelected( item );
+        
+        return( super.onOptionsItemSelected( item ) );
     }
 }

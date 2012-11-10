@@ -2,21 +2,24 @@ package bit.app.need4feed;
 
 import java.util.List;
 
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+
 import android.os.Bundle;
-import android.app.Activity;
 import android.content.Intent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.support.v4.app.NavUtils;
 
-public class CategoryActivity extends Activity 
+public class CategoryActivity extends SherlockActivity 
 {
 	public final static String FEED_ID = "bit.app.need4feed.FEED_ID";
 	
+	ActionBar actionBar;
 	ListView feedListView;
 	List<Feed> feedList;
 
@@ -25,7 +28,7 @@ public class CategoryActivity extends Activity
     {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_category );
-        
+        actionBar = getSupportActionBar();        
         feedListView = (ListView)findViewById( R.id.feedListView );
         
         // Fetch the message containing the category id
@@ -51,24 +54,36 @@ public class CategoryActivity extends Activity
         feedListView.setAdapter( new FeedAdapter( CategoryActivity.this, 
         		                                  feedList ) );
     }
-
+    
     @Override
     public boolean onCreateOptionsMenu( Menu menu ) 
     {
-        getMenuInflater().inflate( R.menu.activity_category, menu );
-        return true;
+        MenuInflater inflater = getSupportMenuInflater();
+        inflater.inflate( R.menu.activity_category, menu );
+        return( true );
+    }
+     
+    public boolean onPrepareOptionsMenu( Menu menu )
+    {
+        return( super.onPrepareOptionsMenu( menu ) );
     }
 
     @Override
     public boolean onOptionsItemSelected( MenuItem item ) 
     {
-        switch ( item.getItemId() ) 
+        if( item.getItemId() == R.id.menu_settings ) 
         {
-            case android.R.id.home:
-                NavUtils.navigateUpFromSameTask( this );
-                return true;
-        }
-        return super.onOptionsItemSelected( item );
-    }
 
+        }
+        if( item.getItemId() == R.id.menu_add_feed )
+        {
+
+        }
+        if( item.getItemId() == R.id.menu_remove_category )
+        {
+
+        }
+        
+        return( super.onOptionsItemSelected( item ) );
+    }
 }

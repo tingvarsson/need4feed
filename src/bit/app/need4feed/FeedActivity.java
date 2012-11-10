@@ -2,21 +2,24 @@ package bit.app.need4feed;
 
 import java.util.List;
 
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+
 import android.os.Bundle;
-import android.app.Activity;
 import android.content.Intent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.support.v4.app.NavUtils;
 
-public class FeedActivity extends Activity 
+public class FeedActivity extends SherlockActivity 
 {
 	public final static String POST_ID = "bit.app.need4feed.POST_ID";
 	
+	ActionBar actionBar;
 	ListView postListView;
 	List<Post> postList;
 
@@ -25,7 +28,7 @@ public class FeedActivity extends Activity
     {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_feed );
-        
+        actionBar = getSupportActionBar();
         postListView = (ListView)findViewById( R.id.postListView );
         
         // Fetch the message containing the feed id
@@ -53,23 +56,28 @@ public class FeedActivity extends Activity
         postListView.setAdapter( new PostAdapter( FeedActivity.this, 
         		                                  postList ) );
     }
-
+    
     @Override
     public boolean onCreateOptionsMenu( Menu menu ) 
     {
-        getMenuInflater().inflate( R.menu.activity_feed, menu );
-        return true;
+        MenuInflater inflater = getSupportMenuInflater();
+        inflater.inflate( R.menu.activity_feed, menu );
+        return( true );
+    }
+     
+    public boolean onPrepareOptionsMenu( Menu menu )
+    {
+        return( super.onPrepareOptionsMenu( menu ) );
     }
 
     @Override
     public boolean onOptionsItemSelected( MenuItem item ) 
     {
-        switch( item.getItemId() ) 
+        if( item.getItemId() == R.id.menu_settings ) 
         {
-            case android.R.id.home:
-                NavUtils.navigateUpFromSameTask( this );
-                return true;
+
         }
-        return super.onOptionsItemSelected( item );
+        
+        return( super.onOptionsItemSelected( item ) );
     }
 }
