@@ -149,7 +149,7 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	    db.close();
 	}
 	
-	public int updateCategory( Category c )
+	public void updateCategory( Category c )
 	{
 		SQLiteDatabase db = this.getWritableDatabase();
 		 
@@ -157,11 +157,12 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	    values.put( KEY_CATEGORY_NAME, c.getName() );
 	 
 	    // updating row
-	    return db.update( TABLE_CATEGORIES, values, KEY_CATEGORY_ID + " = ?",
-	                      new String[] { String.valueOf( c.getId() ) } );
+	    db.update( TABLE_CATEGORIES, values, KEY_CATEGORY_ID + " = ?",
+	               new String[] { String.valueOf( c.getId() ) } );
+	    db.close();
 	}
 	
-	public int updateFeed( Feed f )
+	public void updateFeed( Feed f )
 	{
 		SQLiteDatabase db = this.getWritableDatabase();
 		 
@@ -171,11 +172,12 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	    values.put( KEY_FEED_CATEGORY, f.getCategoryId() );
 	 
 	    // updating row
-	    return db.update( TABLE_CATEGORIES, values, KEY_FEED_ID + " = ?",
-	                      new String[] { String.valueOf( f.getId() ) } );
+	    db.update( TABLE_CATEGORIES, values, KEY_FEED_ID + " = ?",
+	               new String[] { String.valueOf( f.getId() ) } );
+	    db.close();
 	}
 	
-	public int updatePost( Post p )
+	public void updatePost( Post p )
 	{
 		SQLiteDatabase db = this.getWritableDatabase();
 		 
@@ -188,8 +190,9 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	    values.put( KEY_POST_FEED, p.getFeedId() );
 	 
 	    // updating row
-	    return db.update( TABLE_CATEGORIES, values, KEY_POST_ID + " = ?",
-	                      new String[] { String.valueOf( p.getId() ) } );
+	    db.update( TABLE_CATEGORIES, values, KEY_POST_ID + " = ?",
+	               new String[] { String.valueOf( p.getId() ) } );
+	    db.close();
 	}
 	
 	public void deleteCategory( long categoryId )
@@ -223,7 +226,7 @@ public class DatabaseHandler extends SQLiteOpenHelper
 		// Select All Query
 	    String selectQuery = "SELECT  * FROM " + TABLE_CATEGORIES;
 	 
-	    SQLiteDatabase db = this.getWritableDatabase();
+	    SQLiteDatabase db = this.getReadableDatabase();
 	    Cursor cursor = db.rawQuery( selectQuery, null );
 	 
 	    // looping through all rows and adding to list
@@ -237,6 +240,9 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	        } while( cursor.moveToNext() );
 	    }
 	    
+	    cursor.close();
+	    db.close();
+	    
 		return( categoryList );
 	}
 	
@@ -247,7 +253,7 @@ public class DatabaseHandler extends SQLiteOpenHelper
 		// Select All Query
 	    String selectQuery = "SELECT  * FROM " + TABLE_FEEDS;
 	 
-	    SQLiteDatabase db = this.getWritableDatabase();
+	    SQLiteDatabase db = this.getReadableDatabase();
 	    Cursor cursor = db.rawQuery( selectQuery, null );
 	 
 	    // looping through all rows and adding to list
@@ -262,6 +268,9 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	        	feedList.add( f );
 	        } while( cursor.moveToNext() );
 	    }
+	    
+	    cursor.close();
+	    db.close();
 		
 		return( feedList );
 	}
@@ -287,6 +296,9 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	    		           Integer.parseInt( cursor.getString( 3 ) ),
 	                       cursor.getString( 1 ),
 	                       cursor.getString( 2 ) );
+	    
+	    cursor.close();
+	    db.close();
 		
 		return( f );
 	}
@@ -298,7 +310,7 @@ public class DatabaseHandler extends SQLiteOpenHelper
 		// Select All Query
 	    String selectQuery = "SELECT  * FROM " + TABLE_POSTS;
 	 
-	    SQLiteDatabase db = this.getWritableDatabase();
+	    SQLiteDatabase db = this.getReadableDatabase();
 	    Cursor cursor = db.rawQuery( selectQuery, null );
 	 
 	    // looping through all rows and adding to list
@@ -316,6 +328,9 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	        	postList.add( p );
 	        } while( cursor.moveToNext() );
 	    }
+	    
+	    cursor.close();
+	    db.close();
 	    
 		return( postList );
 	}
@@ -348,19 +363,27 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	                       cursor.getString( 4 ),
 	                       cursor.getString( 5 ) );
 		
+	    cursor.close();
+	    db.close();
+	    
 		return( p );
 	}
 	
 	public int getPostCount()
 	{
+		int count;
+		
 		String countQuery = "SELECT  * FROM " + TABLE_POSTS;
 		
         SQLiteDatabase db = this.getReadableDatabase();
         
         Cursor cursor = db.rawQuery(countQuery, null);
+        count = cursor.getCount();
+        
         cursor.close();
+        db.close();
  
         // return count
-        return( cursor.getCount() );
+        return( count );
 	}
 }
