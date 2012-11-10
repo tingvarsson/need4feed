@@ -8,8 +8,13 @@ public class Feed
 	protected String link;
 	// TODO: Also available, do we need/want it? protected String description;
 	
-	// TODO: Add url to constructor
-	public Feed( String title ) { this.title = title; }
+	public Feed( long id, long categoryId, String title, String link ) 
+	{ 
+		this.id = id;
+		this.categoryId = categoryId;
+		this.title = title;
+		this.link = link;
+	}
 	
 	public long getId() { return( this.id ); }
 	public void setId( long id ) { this.id = id; }

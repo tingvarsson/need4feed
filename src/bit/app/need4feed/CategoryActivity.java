@@ -1,6 +1,6 @@
 package bit.app.need4feed;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -18,7 +18,7 @@ public class CategoryActivity extends Activity
 	public final static String FEED_ID = "bit.app.need4feed.FEED_ID";
 	
 	ListView feedListView;
-	ArrayList<Feed> feedList = new ArrayList<Feed>();
+	List<Feed> feedList;
 
     @Override
     public void onCreate( Bundle savedInstanceState ) 
@@ -33,22 +33,8 @@ public class CategoryActivity extends Activity
         int categoryId = intent.getIntExtra( MainActivity.CATEGORY_ID, 0 );
         
         // TODO: Fetch all feeds for categoryId, for now a dummy list
-        feedList.add( new Feed( "Feed A" ) );
-        feedList.add( new Feed( "Feed B" ) );
-        feedList.add( new Feed( "Feed C" ) );
-        feedList.add( new Feed( "Feed D" ) );
-        feedList.add( new Feed( "Feed E" ) );
-        feedList.add( new Feed( "Feed F" ) );
-        feedList.add( new Feed( "Feed G" ) );
-        feedList.add( new Feed( "Feed H" ) );
-        feedList.add( new Feed( "Feed A" ) );
-        feedList.add( new Feed( "Feed B" ) );
-        feedList.add( new Feed( "Feed C" ) );
-        feedList.add( new Feed( "Feed D" ) );
-        feedList.add( new Feed( "Feed E" ) );
-        feedList.add( new Feed( "Feed F" ) );
-        feedList.add( new Feed( "Feed G" ) );
-        feedList.add( new Feed( "Feed H" ) );
+        DatabaseHandler databaseHander = new DatabaseHandler( this );
+        feedList = databaseHander.getFeeds( categoryId );
         
         feedListView.setOnItemClickListener( new OnItemClickListener() 
         {

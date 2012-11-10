@@ -35,14 +35,14 @@ public class PostActivity extends Activity
         Intent intent = getIntent();
         int postId = intent.getIntExtra( FeedActivity.POST_ID, 0 );
         
-        // TODO: Fetch the post with postId
-        displayedPost = new Post();
+        DatabaseHandler databaseHandler = new DatabaseHandler( this );
+        displayedPost = databaseHandler.getPost( postId );
         
         // Insert title, feed and content in the view
-        titleTextView.setText( "Post Title" );//displayedPost.getTitle() );
+        titleTextView.setText( displayedPost.getTitle() );
         
-        // TODO: Fetch feed to show feed's name as a subtitle
-        feedTextView.setText( "From random feed" );//sourceFeed.getTitle() );
+        sourceFeed = databaseHandler.getFeed( displayedPost.getFeedId() );
+        feedTextView.setText( sourceFeed.getTitle() );
         
         contentWebView.loadData( displayedPost.getDescription(), 
         		                 "text/html; charset=UTF-8", null);

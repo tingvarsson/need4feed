@@ -51,25 +51,27 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	public void onCreate(SQLiteDatabase db) 
 	{
 		String CREATE_CATEGORIES_TABLE = "CREATE TABLE " + TABLE_CATEGORIES + 
-			   "(" + KEY_CATEGORY_ID + " INTEGER PRIMARY KEY ASC," + 
+			   "(" + KEY_CATEGORY_ID + " INTEGER PRIMARY KEY ASC, " + 
 			   KEY_CATEGORY_NAME + " TEXT" + ")";
 		
         db.execSQL( CREATE_CATEGORIES_TABLE );
         
 	    String CREATE_TABLE_FEEDS = "CREATE TABLE " + TABLE_FEEDS + 
-			   "(" + KEY_FEED_ID + " INTEGER PRIMARY KEY ASC," + 
-			   KEY_FEED_TITLE + " TEXT," + KEY_FEED_LINK + 
-			   " TEXT, FOREIGN KEY(" + KEY_FEED_CATEGORY + ") REFERENCES " +
-			   TABLE_CATEGORIES + "(" + KEY_CATEGORY_ID + ")" + ")";
+			   "(" + KEY_FEED_ID + " INTEGER PRIMARY KEY ASC, " + 
+			   KEY_FEED_TITLE + " TEXT, " + KEY_FEED_LINK + 
+			   " TEXT, " + KEY_FEED_CATEGORY + " INTEGER, FOREIGN KEY(" + 
+			   KEY_FEED_CATEGORY + ") REFERENCES " + TABLE_CATEGORIES + "(" + 
+			   KEY_CATEGORY_ID + ")" + ")";
 		
 	    db.execSQL( CREATE_TABLE_FEEDS );
 	     
 	    String CREATE_TABLE_POSTS = "CREATE TABLE " + TABLE_POSTS + 
-			   "(" + KEY_POST_ID + " INTEGER PRIMARY KEY ASC," + 
-			   KEY_POST_TITLE + " TEXT," + KEY_POST_LINK + " TEXT," + 
-			   KEY_POST_DESCRIPTION + " TEXT," + KEY_POST_PUBDATE + " TEXT," + 
-			   KEY_POST_THUMBNAIL + " TEXT, FOREIGN KEY(" + KEY_POST_FEED + 
-			   ") REFERENCES " + TABLE_CATEGORIES + "(" + KEY_FEED_ID + ")" + ")";
+			   "(" + KEY_POST_ID + " INTEGER PRIMARY KEY ASC, " + 
+			   KEY_POST_TITLE + " TEXT, " + KEY_POST_LINK + " TEXT, " + 
+			   KEY_POST_DESCRIPTION + " TEXT, " + KEY_POST_PUBDATE + " TEXT, " + 
+			   KEY_POST_THUMBNAIL + " TEXT, " + KEY_POST_FEED + 
+			   " INTEGER, FOREIGN KEY(" + KEY_POST_FEED +  ") REFERENCES " + 
+			   TABLE_FEEDS + "(" + KEY_FEED_ID + ")" + ")";
 		
 	    db.execSQL( CREATE_TABLE_POSTS );
 	}

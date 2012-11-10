@@ -1,6 +1,6 @@
 package bit.app.need4feed;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,12 +13,12 @@ import android.widget.TextView;
 public class FeedAdapter extends BaseAdapter 
 {
 	private Activity activity;
-	private ArrayList<Feed> feedList;
+	private List<Feed> feedList;
 	private static LayoutInflater inflater = null;
 	
 	ViewHolder holder;
 
-	public FeedAdapter( Activity a, ArrayList<Feed> fList ) 
+	public FeedAdapter( Activity a, List<Feed> fList ) 
 	{
 		activity = a;
 		feedList = fList;

@@ -1,6 +1,6 @@
 package bit.app.need4feed;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import bit.app.need4feed.Category;
 
@@ -20,7 +20,7 @@ public class MainActivity extends Activity
 	public final static String CATEGORY_ID = "bit.app.need4feed.CATEGORY_ID";
 	
 	ListView categoryListView;
-	ArrayList<Category> categoryList = new ArrayList<Category>();
+	List<Category> categoryList;
 
     @Override
     public void onCreate( Bundle savedInstanceState ) 
@@ -29,23 +29,8 @@ public class MainActivity extends Activity
         setContentView( R.layout.activity_main );
         categoryListView = (ListView)findViewById( R.id.categoryListView );
         
-        // TODO: Fetch all categories, for now a dummy list
-        categoryList.add( new Category( "Cat A" ) );
-        categoryList.add( new Category( "Cat B" ) );
-        categoryList.add( new Category( "Cat C" ) );
-        categoryList.add( new Category( "Cat D" ) );
-        categoryList.add( new Category( "Cat E" ) );
-        categoryList.add( new Category( "Cat F" ) );
-        categoryList.add( new Category( "Cat G" ) );
-        categoryList.add( new Category( "Cat H" ) );
-        categoryList.add( new Category( "Cat A" ) );
-        categoryList.add( new Category( "Cat B" ) );
-        categoryList.add( new Category( "Cat C" ) );
-        categoryList.add( new Category( "Cat D" ) );
-        categoryList.add( new Category( "Cat E" ) );
-        categoryList.add( new Category( "Cat F" ) );
-        categoryList.add( new Category( "Cat G" ) );
-        categoryList.add( new Category( "Cat H" ) );
+        DatabaseHandler databaseHandler = new DatabaseHandler( this );
+        categoryList = databaseHandler.getCategories();
         
         categoryListView.setOnItemClickListener( new OnItemClickListener() 
         {

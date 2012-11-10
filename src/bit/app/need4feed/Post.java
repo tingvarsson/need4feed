@@ -10,6 +10,20 @@ public class Post
 	protected String pubDate;
 	protected String thumbnail;
 	
+	public Post() {}
+	
+	public Post( long id, long feedId, String title, String link, 
+			     String description, String pubDate, String thumbnail )
+	{
+		this.id = id;
+		this.feedId = feedId;
+		this.title = title;
+		this.link = link;
+		this.description = description;
+		this.pubDate = pubDate;
+		this.thumbnail = thumbnail;
+	}
+	
 	public long getId() { return( this.id ); }
 	public void setId( long id ) { this.id = id; }
 	

@@ -1,6 +1,6 @@
 package bit.app.need4feed;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,12 +13,12 @@ import android.widget.TextView;
 public class CategoryAdapter extends BaseAdapter 
 {
 	private Activity activity;
-	private ArrayList<Category> categoryList;
+	private List<Category> categoryList;
 	private static LayoutInflater inflater = null;
 	
 	ViewHolder holder;
 
-	public CategoryAdapter( Activity a, ArrayList<Category> cList )
+	public CategoryAdapter( Activity a, List<Category> cList )
 	{
 		activity = a;
 		categoryList = cList;

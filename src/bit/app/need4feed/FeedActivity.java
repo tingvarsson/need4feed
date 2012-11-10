@@ -1,6 +1,6 @@
 package bit.app.need4feed;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -18,7 +18,7 @@ public class FeedActivity extends Activity
 	public final static String POST_ID = "bit.app.need4feed.POST_ID";
 	
 	ListView postListView;
-	ArrayList<Post> postList;
+	List<Post> postList;
 
     @Override
     public void onCreate( Bundle savedInstanceState ) 
@@ -32,7 +32,9 @@ public class FeedActivity extends Activity
         Intent intent = getIntent();
         int feedId = intent.getIntExtra( CategoryActivity.FEED_ID, 0 );
         
-        // TODO: Fetch posts for feedId, for now a dummy list
+        // TODO: Fetch posts for feedId, for now just get them from online
+        DatabaseHandler databaseHandler = new DatabaseHandler( this );
+        postList = databaseHandler.getPosts( feedId );
         RssHandler rssHandler = new RssHandler();
         postList = rssHandler.getLatestPosts( "http://www.sweclockers.com/feeds/news.xml" );
         
