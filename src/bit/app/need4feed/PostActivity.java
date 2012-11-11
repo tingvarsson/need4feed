@@ -1,7 +1,7 @@
 package bit.app.need4feed;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
@@ -14,7 +14,7 @@ import android.view.View.OnClickListener;
 import android.webkit.WebView;
 import android.widget.TextView;
 
-public class PostActivity extends SherlockActivity 
+public class PostActivity extends SherlockFragmentActivity 
 {
 	ActionBar actionBar;
 	

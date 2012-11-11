@@ -1,6 +1,7 @@
 package bit.app.need4feed;
 
-public class Category 
+
+public class Category implements Comparable<Category>
 {
 	private long id;
 	private String name;
@@ -12,4 +13,9 @@ public class Category
 	
 	public String getName() { return( this.name ); }
 	public void setName( String name ) { this.name = name; }
+
+	public int compareTo( Category another ) 
+	{
+		return( this.getName().compareTo( another.getName() ) );
+	}
 }

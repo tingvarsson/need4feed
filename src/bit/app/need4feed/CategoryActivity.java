@@ -3,7 +3,7 @@ package bit.app.need4feed;
 import java.util.List;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
@@ -15,7 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class CategoryActivity extends SherlockActivity 
+public class CategoryActivity extends SherlockFragmentActivity 
 {
 	public final static String FEED_ID = "bit.app.need4feed.FEED_ID";
 	
