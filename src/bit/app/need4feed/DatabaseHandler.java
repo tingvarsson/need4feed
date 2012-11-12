@@ -201,7 +201,8 @@ public class DatabaseHandler extends SQLiteOpenHelper
 		List<Category> categoryList = new ArrayList<Category>();
 		
 		// Select All Query
-	    String selectQuery = "SELECT  * FROM " + TABLE_CATEGORIES;
+	    String selectQuery = "SELECT * FROM " + TABLE_CATEGORIES + 
+	    		             " ORDER BY "+ KEY_CATEGORY_NAME + " COLLATE NOCASE";
 	 
 	    Cursor cursor = this.db.rawQuery( selectQuery, null );
 	 
@@ -226,7 +227,8 @@ public class DatabaseHandler extends SQLiteOpenHelper
 		List<Feed> feedList = new ArrayList<Feed>();
 		
 		// Select All Query
-	    String selectQuery = "SELECT  * FROM " + TABLE_FEEDS;
+	    String selectQuery = "SELECT  * FROM " + TABLE_FEEDS + 
+	                         " ORDER BY "+ KEY_FEED_TITLE + " COLLATE NOCASE";
 	 
 	    Cursor cursor = this.db.rawQuery( selectQuery, null );
 	 
