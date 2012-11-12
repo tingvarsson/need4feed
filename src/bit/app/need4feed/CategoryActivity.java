@@ -22,6 +22,8 @@ public class CategoryActivity extends SherlockFragmentActivity
 	ActionBar actionBar;
 	ListView feedListView;
 	List<Feed> feedList;
+	
+	DatabaseHandler databaseHandler;
 
     @Override
     public void onCreate( Bundle savedInstanceState ) 
@@ -31,13 +33,15 @@ public class CategoryActivity extends SherlockFragmentActivity
         actionBar = getSupportActionBar();        
         feedListView = (ListView)findViewById( R.id.feedListView );
         
+        MainApplication appContext = (MainApplication)getApplicationContext();
+        databaseHandler = appContext.getDatabaseHandler();
+        
         // Fetch the message containing the category id
         Intent intent = getIntent();
         int categoryId = intent.getIntExtra( MainActivity.CATEGORY_ID, 0 );
         
         // TODO: Fetch all feeds for categoryId, for now a dummy list
-        DatabaseHandler databaseHander = new DatabaseHandler( this );
-        feedList = databaseHander.getFeeds( categoryId );
+        feedList = databaseHandler.getFeeds( categoryId );
         
         feedListView.setOnItemClickListener( new OnItemClickListener() 
         {

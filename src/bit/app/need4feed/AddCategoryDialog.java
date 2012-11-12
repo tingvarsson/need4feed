@@ -25,7 +25,8 @@ public class AddCategoryDialog extends DialogFragment
     private Button cancelButton;
     private Button addButton;
 
-    public AddCategoryDialog() {
+    public AddCategoryDialog() 
+    {
         // Empty constructor required for DialogFragment
     }
 

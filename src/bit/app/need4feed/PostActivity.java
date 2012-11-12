@@ -24,6 +24,8 @@ public class PostActivity extends SherlockFragmentActivity
 	
 	Feed sourceFeed;
 	Post displayedPost;
+	
+	DatabaseHandler databaseHandler;
 
     @Override
     public void onCreate( Bundle savedInstanceState ) 
@@ -31,6 +33,9 @@ public class PostActivity extends SherlockFragmentActivity
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_post );
         actionBar = getSupportActionBar();
+        
+        MainApplication appContext = (MainApplication)getApplicationContext();
+        databaseHandler = appContext.getDatabaseHandler();
         
         titleTextView = (TextView)findViewById( R.id.titleTextView );
         feedTextView = (TextView)findViewById( R.id.sourceTextView );
@@ -40,7 +45,6 @@ public class PostActivity extends SherlockFragmentActivity
         Intent intent = getIntent();
         int postId = intent.getIntExtra( FeedActivity.POST_ID, 0 );
         
-        DatabaseHandler databaseHandler = new DatabaseHandler( this );
         displayedPost = databaseHandler.getPost( postId );
         
         // Insert title, feed and content in the view

@@ -22,6 +22,8 @@ public class FeedActivity extends SherlockFragmentActivity
 	ActionBar actionBar;
 	ListView postListView;
 	List<Post> postList;
+	
+	DatabaseHandler databaseHandler;
 
     @Override
     public void onCreate( Bundle savedInstanceState ) 
@@ -31,12 +33,15 @@ public class FeedActivity extends SherlockFragmentActivity
         actionBar = getSupportActionBar();
         postListView = (ListView)findViewById( R.id.postListView );
         
+        MainApplication appContext = (MainApplication)getApplicationContext();
+        databaseHandler = appContext.getDatabaseHandler();
+        
         // Fetch the message containing the feed id
         Intent intent = getIntent();
         int feedId = intent.getIntExtra( CategoryActivity.FEED_ID, 0 );
         
         // TODO: Fetch posts for feedId, for now just get them from online
-        DatabaseHandler databaseHandler = new DatabaseHandler( this );
+        
         postList = databaseHandler.getPosts( feedId );
         RssHandler rssHandler = new RssHandler();
         postList = rssHandler.getLatestPosts( "http://www.sweclockers.com/feeds/news.xml" );

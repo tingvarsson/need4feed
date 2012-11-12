@@ -42,10 +42,14 @@ public class DatabaseHandler extends SQLiteOpenHelper
     private static final String KEY_POST_PUBDATE = "post_pubdate";
     private static final String KEY_POST_THUMBNAIL = "post_thumbnail";
     private static final String KEY_POST_FEED = "post_feed";
+    
+    private SQLiteDatabase db;
 
     public DatabaseHandler( Context context ) 
     {
         super( context, DATABASE_NAME, null, DATABASE_VERSION );
+        
+        this.db = this.getWritableDatabase();
     }
     
 	@Override
@@ -92,43 +96,33 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	
 	public void addCategory( Category c )
 	{
-		SQLiteDatabase db = this.getWritableDatabase();
-		 
 	    ContentValues values = new ContentValues();
 	    values.put( KEY_CATEGORY_NAME, c.getName() );
 	 
 	    //  Insert the row, returned is the rowid used as category id
-	    c.setId( db.insert( TABLE_CATEGORIES, null, values ) );
+	    c.setId( this.db.insert( TABLE_CATEGORIES, null, values ) );
 	    
 	    Log.d( "Database Handler", "Category added, id: " + 
 	           Long.toString( c.getId() ) + " , name: " + c.getName() );
-	    
-	    db.close();
 	}
 	
 	public void addFeed( Feed f )
 	{
-		SQLiteDatabase db = this.getWritableDatabase();
-		 
 	    ContentValues values = new ContentValues();
 	    values.put( KEY_FEED_TITLE, f.getTitle() );
 	    values.put( KEY_FEED_LINK, f.getLink() );
 	    values.put( KEY_FEED_CATEGORY, f.getCategoryId() );
 	 
 	    //  Insert the row, returned is the rowid used as feed id
-	    f.setId( db.insert( TABLE_FEEDS, null, values ) );
+	    f.setId( this.db.insert( TABLE_FEEDS, null, values ) );
 	    
 	    Log.d( "Database Handler", "Feed added, id: " + Long.toString( f.getId() ) +
 	    	   " , title: " + f.getTitle() + " , link: " + f.getLink() + 
 	    	   " , category id: " + Long.toString( f.getCategoryId() ) );
-	    
-	    db.close();
 	}
 	
 	public void addPost( Post p )
 	{
-		SQLiteDatabase db = this.getWritableDatabase();
-		 
 	    ContentValues values = new ContentValues();
 	    values.put( KEY_POST_TITLE, p.getTitle() );
 	    values.put( KEY_POST_LINK, p.getLink() );
@@ -138,49 +132,39 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	    values.put( KEY_POST_FEED, p.getFeedId() );
 	 
 	    //  Insert the row, returned is the rowid used as feed id
-	    p.setId( db.insert( TABLE_POSTS, null, values ) );
+	    p.setId( this.db.insert( TABLE_POSTS, null, values ) );
 	    
 	    Log.d( "Database Handler", "Post added, id: " + Long.toString( p.getId() ) +
 	    	   " , title: " + p.getTitle() + " , link: " + p.getLink() + 
 	    	   " , description: " + p.getDescription() + " , pubdate: " + 
 	    	   p.getPubDate() + " , thumbnail: " + p.getThumbnail() + 
 	    	   " , category id: " + Long.toString( p.getFeedId() ) );
-	    
-	    db.close();
 	}
 	
 	public void updateCategory( Category c )
 	{
-		SQLiteDatabase db = this.getWritableDatabase();
-		 
 	    ContentValues values = new ContentValues();
 	    values.put( KEY_CATEGORY_NAME, c.getName() );
 	 
 	    // updating row
-	    db.update( TABLE_CATEGORIES, values, KEY_CATEGORY_ID + " = ?",
+	    this.db.update( TABLE_CATEGORIES, values, KEY_CATEGORY_ID + " = ?",
 	               new String[] { String.valueOf( c.getId() ) } );
-	    db.close();
 	}
 	
 	public void updateFeed( Feed f )
 	{
-		SQLiteDatabase db = this.getWritableDatabase();
-		 
 	    ContentValues values = new ContentValues();
 	    values.put( KEY_FEED_TITLE, f.getTitle() );
 	    values.put( KEY_FEED_LINK, f.getLink() );
 	    values.put( KEY_FEED_CATEGORY, f.getCategoryId() );
 	 
 	    // updating row
-	    db.update( TABLE_CATEGORIES, values, KEY_FEED_ID + " = ?",
+	    this.db.update( TABLE_CATEGORIES, values, KEY_FEED_ID + " = ?",
 	               new String[] { String.valueOf( f.getId() ) } );
-	    db.close();
 	}
 	
 	public void updatePost( Post p )
 	{
-		SQLiteDatabase db = this.getWritableDatabase();
-		 
 	    ContentValues values = new ContentValues();
 	    values.put( KEY_POST_TITLE, p.getTitle() );
 	    values.put( KEY_POST_LINK, p.getLink() );
@@ -190,33 +174,26 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	    values.put( KEY_POST_FEED, p.getFeedId() );
 	 
 	    // updating row
-	    db.update( TABLE_CATEGORIES, values, KEY_POST_ID + " = ?",
+	    this.db.update( TABLE_CATEGORIES, values, KEY_POST_ID + " = ?",
 	               new String[] { String.valueOf( p.getId() ) } );
-	    db.close();
 	}
 	
 	public void deleteCategory( long categoryId )
 	{
-		SQLiteDatabase db = this.getWritableDatabase();
-	    db.delete( TABLE_CATEGORIES, KEY_CATEGORY_ID + " = ?",
+		this.db.delete( TABLE_CATEGORIES, KEY_CATEGORY_ID + " = ?",
 	               new String[] { String.valueOf( categoryId ) } );
-	    db.close();
 	}
 	
 	public void deleteFeed( long feedId )
 	{
-		SQLiteDatabase db = this.getWritableDatabase();
-	    db.delete( TABLE_FEEDS, KEY_FEED_ID + " = ?",
+		this.db.delete( TABLE_FEEDS, KEY_FEED_ID + " = ?",
 	               new String[] { String.valueOf( feedId ) } );
-	    db.close();
 	}
 	
 	public void deletePost( long postId )
 	{
-		SQLiteDatabase db = this.getWritableDatabase();
-	    db.delete( TABLE_POSTS, KEY_POST_ID + " = ?",
+		this.db.delete( TABLE_POSTS, KEY_POST_ID + " = ?",
 	               new String[] { String.valueOf( postId ) } );
-	    db.close();
 	}
 	
 	public List<Category> getCategories()
@@ -226,8 +203,7 @@ public class DatabaseHandler extends SQLiteOpenHelper
 		// Select All Query
 	    String selectQuery = "SELECT  * FROM " + TABLE_CATEGORIES;
 	 
-	    SQLiteDatabase db = this.getReadableDatabase();
-	    Cursor cursor = db.rawQuery( selectQuery, null );
+	    Cursor cursor = this.db.rawQuery( selectQuery, null );
 	 
 	    // looping through all rows and adding to list
 	    if( cursor.moveToFirst() ) 
@@ -241,7 +217,6 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	    }
 	    
 	    cursor.close();
-	    db.close();
 	    
 		return( categoryList );
 	}
@@ -253,8 +228,7 @@ public class DatabaseHandler extends SQLiteOpenHelper
 		// Select All Query
 	    String selectQuery = "SELECT  * FROM " + TABLE_FEEDS;
 	 
-	    SQLiteDatabase db = this.getReadableDatabase();
-	    Cursor cursor = db.rawQuery( selectQuery, null );
+	    Cursor cursor = this.db.rawQuery( selectQuery, null );
 	 
 	    // looping through all rows and adding to list
 	    if( cursor.moveToFirst() ) 
@@ -270,16 +244,13 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	    }
 	    
 	    cursor.close();
-	    db.close();
 		
 		return( feedList );
 	}
 	
 	public Feed getFeed( long feedId )
 	{
-		SQLiteDatabase db = this.getReadableDatabase();
-		 
-	    Cursor cursor = db.query( TABLE_FEEDS, new String[] { KEY_FEED_ID,
+	    Cursor cursor = this.db.query( TABLE_FEEDS, new String[] { KEY_FEED_ID,
 	    													  KEY_FEED_TITLE, 
 	    		                                              KEY_FEED_LINK,
 	    		                                              KEY_FEED_CATEGORY }, 
@@ -298,7 +269,6 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	                       cursor.getString( 2 ) );
 	    
 	    cursor.close();
-	    db.close();
 		
 		return( f );
 	}
@@ -310,8 +280,7 @@ public class DatabaseHandler extends SQLiteOpenHelper
 		// Select All Query
 	    String selectQuery = "SELECT  * FROM " + TABLE_POSTS;
 	 
-	    SQLiteDatabase db = this.getReadableDatabase();
-	    Cursor cursor = db.rawQuery( selectQuery, null );
+	    Cursor cursor = this.db.rawQuery( selectQuery, null );
 	 
 	    // looping through all rows and adding to list
 	    if( cursor.moveToFirst() ) 
@@ -330,16 +299,13 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	    }
 	    
 	    cursor.close();
-	    db.close();
 	    
 		return( postList );
 	}
 	
 	public Post getPost( long postId )
 	{
-		SQLiteDatabase db = this.getReadableDatabase();
-		 
-	    Cursor cursor = db.query( TABLE_POSTS, new String[] { KEY_POST_ID,
+	    Cursor cursor = this.db.query( TABLE_POSTS, new String[] { KEY_POST_ID,
 	    													  KEY_POST_TITLE, 
 	    		                                              KEY_POST_LINK,
 	    		                                              KEY_POST_DESCRIPTION,
@@ -364,7 +330,6 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	                       cursor.getString( 5 ) );
 		
 	    cursor.close();
-	    db.close();
 	    
 		return( p );
 	}
@@ -374,14 +339,11 @@ public class DatabaseHandler extends SQLiteOpenHelper
 		int count;
 		
 		String countQuery = "SELECT  * FROM " + TABLE_POSTS;
-		
-        SQLiteDatabase db = this.getReadableDatabase();
         
-        Cursor cursor = db.rawQuery(countQuery, null);
+        Cursor cursor = this.db.rawQuery(countQuery, null);
         count = cursor.getCount();
         
         cursor.close();
-        db.close();
  
         // return count
         return( count );

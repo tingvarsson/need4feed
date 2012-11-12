@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import bit.app.need4feed.AddCategoryDialog.AddCategoryDialogListener;
+import bit.app.need4feed.RemoveCategoryDialog.RemoveCategoryDialogListener;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -19,7 +20,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class MainActivity extends SherlockFragmentActivity implements AddCategoryDialogListener
+public class MainActivity extends SherlockFragmentActivity 
+                          implements AddCategoryDialogListener, 
+                                     RemoveCategoryDialogListener
 {
 	public final static String CATEGORY_ID = "bit.app.need4feed.CATEGORY_ID";
 	
@@ -38,7 +41,9 @@ public class MainActivity extends SherlockFragmentActivity implements AddCategor
         actionBar = getSupportActionBar();
         categoryListView = (ListView)findViewById( R.id.categoryListView );
         
-        databaseHandler = new DatabaseHandler( this );
+        MainApplication appContext = (MainApplication)getApplicationContext();
+        databaseHandler = appContext.getDatabaseHandler();
+        
         categoryList = databaseHandler.getCategories();
         
         categoryListView.setOnItemClickListener( new OnItemClickListener() 
