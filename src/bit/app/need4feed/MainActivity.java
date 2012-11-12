@@ -3,7 +3,7 @@ package bit.app.need4feed;
 import java.util.Collections;
 import java.util.List;
 
-import bit.app.need4feed.AddCategoryDialog.EditNameDialogListener;
+import bit.app.need4feed.AddCategoryDialog.AddCategoryDialogListener;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -19,7 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class MainActivity extends SherlockFragmentActivity implements EditNameDialogListener
+public class MainActivity extends SherlockFragmentActivity implements AddCategoryDialogListener
 {
 	public final static String CATEGORY_ID = "bit.app.need4feed.CATEGORY_ID";
 	
@@ -74,26 +74,35 @@ public class MainActivity extends SherlockFragmentActivity implements EditNameDi
     @Override
     public boolean onOptionsItemSelected( MenuItem item ) 
     {
-        if( item.getItemId() == R.id.menu_settings ) 
-        {
-
-        }
-        if( item.getItemId() == R.id.menu_add_category )
-        {
+    	switch( item.getItemId() )
+    	{
+    	case R.id.menu_settings:
+    		
+    		break;
+    	case R.id.menu_add_category:
         	FragmentManager fm = getSupportFragmentManager();
             AddCategoryDialog addCategoryDialog = new AddCategoryDialog();
             addCategoryDialog.show(fm, "fragment_add_category");
-        }
-        
+    		break;
+    		
+    	case R.id.menu_remove_category:
+    		
+    		break;
+    	}
         return( super.onOptionsItemSelected( item ) );
     }
     
-    public void onFinishEditDialog( String inputText ) 
+    public void onFinishAddCategoryDialog( String categoryName )
     {
-    	Category newCategory = new Category( inputText );
+    	Category newCategory = new Category( categoryName );
     	databaseHandler.addCategory( newCategory );
     	categoryList.add( newCategory );
     	Collections.sort( categoryList );
     	categoryAdapter.notifyDataSetChanged();
+    }
+    
+    public void onFinishRemoveCategoryDialog( int categoryId )
+    {
+    	
     }
 }
