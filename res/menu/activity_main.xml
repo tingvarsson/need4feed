@@ -8,10 +8,10 @@
         android:id="@+id/menu_add_category" 
         android:title="@string/menu_add_category" 
         android:showAsAction="ifRoom|withText" 
-        android:icon="@drawable/ic_action_add_category" />
+        android:icon="@drawable/ic_action_new" />
     <item 
         android:id="@+id/menu_remove_category" 
         android:title="@string/menu_remove_category"
         android:showAsAction="ifRoom|withText"
-        android:icon="@drawable/ic_action_remove_category" />
+        android:icon="@drawable/ic_action_remove" />
 </menu>
