@@ -16,6 +16,6 @@ public class Category implements Comparable<Category>
 
 	public int compareTo( Category another ) 
 	{
-		return( this.getName().compareTo( another.getName() ) );
+		return( this.getName().compareToIgnoreCase( another.getName() ) );
 	}
 }
