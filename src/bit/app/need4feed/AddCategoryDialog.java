@@ -12,12 +12,30 @@ public class AddCategoryDialog extends DialogFragment
 {
     public interface AddCategoryDialogListener
     {
-        void onFinishAddCategoryDialog( String categoryName );
+        void onFinishAddCategoryDialog();
     }
+    
+    private AddCategoryDialogListener addCategoryDialogListener;
+    private DatabaseHandler databaseHandler;
 
     public AddCategoryDialog() 
     {
         // Empty constructor required for DialogFragment
+    }
+    
+    @Override
+    public void onAttach( android.app.Activity activity ) 
+    {
+        super.onAttach( activity );
+        try
+        {
+        	addCategoryDialogListener = (AddCategoryDialogListener)activity;
+        }
+        catch( ClassCastException e )
+        {
+            // The hosting activity does not implemented the interface AddCategoryDialogListener
+            throw new ClassCastException(activity.toString() + " must implement AddCategoryDialogListener");
+        }
     }
     
     @Override
@@ -27,21 +45,34 @@ public class AddCategoryDialog extends DialogFragment
  
         dialogBuilder.setTitle("Add Category");
         
+        // Setup a handle to the databaseHandler
+        MainApplication appContext = (MainApplication)getActivity().getApplicationContext();
+        databaseHandler = appContext.getDatabaseHandler();
+        
+        // Setup the content: a string input view
         final EditText input = new EditText( getActivity() );
         dialogBuilder.setView( input );
         
+        // Setup buttons
         dialogBuilder.setPositiveButton( "Add", new OnClickListener() 
         {
             public void onClick(DialogInterface dialog, int which) 
             {
-            	AddCategoryDialogListener activity = (AddCategoryDialogListener)getActivity();
-                activity.onFinishAddCategoryDialog( input.getText().toString() );
-                dismiss();
+            	String inputString = input.getText().toString();
+            	
+            	// Validate that it is a non-empty string
+            	if( !inputString.equals( "" ) )
+            	{
+	            	Category newCategory = new Category( inputString );
+	            	databaseHandler.addCategory( newCategory );
+	            	addCategoryDialogListener.onFinishAddCategoryDialog();
+            	}
             }
         } );
         
         dialogBuilder.setNegativeButton( "Cancel", null );
         
+        // Finalize the dialog and return it
         AlertDialog dialog = dialogBuilder.create();
         return( dialog );
     }

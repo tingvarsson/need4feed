@@ -1,8 +1,5 @@
 package bit.app.need4feed;
 
-import java.util.Collections;
-import java.util.List;
-
 import bit.app.need4feed.AddCategoryDialog.AddCategoryDialogListener;
 import bit.app.need4feed.RemoveCategoryDialog.RemoveCategoryDialogListener;
 
@@ -28,7 +25,6 @@ public class MainActivity extends SherlockFragmentActivity
 	
 	ActionBar actionBar;
 	ListView categoryListView;
-	List<Category> categoryList;
 	CategoryAdapter categoryAdapter;
 	
 	DatabaseHandler databaseHandler;
@@ -44,8 +40,6 @@ public class MainActivity extends SherlockFragmentActivity
         MainApplication appContext = (MainApplication)getApplicationContext();
         databaseHandler = appContext.getDatabaseHandler();
         
-        categoryList = databaseHandler.getCategories();
-        
         categoryListView.setOnItemClickListener( new OnItemClickListener() 
         {
 			public void onItemClick( AdapterView<?> parent, View view,
@@ -58,7 +52,8 @@ public class MainActivity extends SherlockFragmentActivity
 			}
 		} );
         
-        categoryAdapter = new CategoryAdapter( MainActivity.this, categoryList );
+        categoryAdapter = new CategoryAdapter( MainActivity.this, 
+                							   databaseHandler.getCategories() );
         
         categoryListView.setAdapter( categoryAdapter );
     }
@@ -99,18 +94,15 @@ public class MainActivity extends SherlockFragmentActivity
         return( super.onOptionsItemSelected( item ) );
     }
     
-    public void onFinishAddCategoryDialog( String categoryName )
+    public void onFinishAddCategoryDialog()
     {
-    	Category newCategory = new Category( categoryName );
-    	databaseHandler.addCategory( newCategory );
-    	categoryList.add( newCategory );
-    	Collections.sort( categoryList );
+    	categoryAdapter.setCategoryList( databaseHandler.getCategories() );
     	categoryAdapter.notifyDataSetChanged();
     }
     
-    public void onFinishRemoveCategoryDialog( int categoryPosition )
+    public void onFinishRemoveCategoryDialog()
     {
-    	categoryList.remove( categoryPosition );
+    	categoryAdapter.setCategoryList( databaseHandler.getCategories() );
     	categoryAdapter.notifyDataSetChanged();
     }
 }

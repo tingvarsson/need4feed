@@ -222,6 +222,31 @@ public class DatabaseHandler extends SQLiteOpenHelper
 		return( categoryList );
 	}
 	
+	public String[] getCategoryNames()
+	{
+		ArrayList<String> categoryNames = new ArrayList<String>();
+		// Select All Query
+	    String selectQuery = "SELECT * FROM " + TABLE_CATEGORIES + 
+	    		             " ORDER BY "+ KEY_CATEGORY_NAME + " COLLATE NOCASE";
+	 
+	    Cursor cursor = this.db.rawQuery( selectQuery, null );
+	 
+	    // looping through all rows and adding to list
+	    if( cursor.moveToFirst() ) 
+	    {
+	        do
+	        {
+	        	categoryNames.add( cursor.getString( 1 ) );
+	        } while( cursor.moveToNext() );
+	    }
+	    
+	    cursor.close();
+	    
+	    // Return it as a String[], the new String[0] is to force the function
+	    // to accept the type
+		return( (String[])categoryNames.toArray( new String[0] ) );
+	}
+	
 	public List<Feed> getFeeds( long categoryId )
 	{
 		List<Feed> feedList = new ArrayList<Feed>();

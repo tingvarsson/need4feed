@@ -25,6 +25,11 @@ public class CategoryAdapter extends BaseAdapter
 		inflater = (LayoutInflater)activity
 				   .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
+	
+	public void setCategoryList( List<Category> cList )
+	{
+		categoryList = cList;
+	}
 
 	public int getCount() 
 	{

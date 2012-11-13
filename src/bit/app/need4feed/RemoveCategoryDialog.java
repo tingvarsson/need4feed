@@ -13,7 +13,7 @@ public class RemoveCategoryDialog extends DialogFragment
 {
 	public interface RemoveCategoryDialogListener
 	{
-		void onFinishRemoveCategoryDialog( int categoryPosition );
+		void onFinishRemoveCategoryDialog();
 	}
 	
 	List<Category> categoryList;
@@ -36,7 +36,7 @@ public class RemoveCategoryDialog extends DialogFragment
         }
         catch( ClassCastException e )
         {
-            // The hosting activity does not implemented the interface AlertPositiveListener
+            // The hosting activity does not implemented the interface AddCategoryDialogListener
             throw new ClassCastException(activity.toString() + " must implement RemoveCategoryDialogListener");
         }
     }
@@ -48,31 +48,34 @@ public class RemoveCategoryDialog extends DialogFragment
  
         dialogBuilder.setTitle("Remove Category");
         
+        // Setup the content: radio button list of categories
         MainApplication appContext = (MainApplication)getActivity().getApplicationContext();
         databaseHandler = appContext.getDatabaseHandler();
         
-        categoryList = databaseHandler.getCategories();
-        String[] categoryNames = new String[ categoryList.toArray().length ];
-        for( int i = 0; i < categoryList.toArray().length; i++ )
-        {
-        	categoryNames[ i ] = categoryList.get( i ).getName();
-        }
-        
-        dialogBuilder.setSingleChoiceItems( categoryNames, 0, null );
+        dialogBuilder.setSingleChoiceItems( databaseHandler.getCategoryNames(), 0, null );
  
+        // Setup buttons
         dialogBuilder.setPositiveButton( "Remove", new OnClickListener() 
         {
             public void onClick(DialogInterface dialog, int which) 
             {
+            	// FIXME: Add handling of position <= 0!
                 AlertDialog alert = (AlertDialog)dialog;
                 int position = alert.getListView().getCheckedItemPosition();
-                databaseHandler.deleteCategory( categoryList.get( position ).getId() );
-                removeCategoryDialogListener.onFinishRemoveCategoryDialog( position );
+                
+                // Validate that it is a correct postion
+                if( position > 0 )
+                {
+	                categoryList = databaseHandler.getCategories();
+	                databaseHandler.deleteCategory( categoryList.get( position ).getId() );
+	                removeCategoryDialogListener.onFinishRemoveCategoryDialog();
+                }
             }
         } );
  
         dialogBuilder.setNegativeButton( "Cancel", null );
  
+        // Finalize the dialog and return it
         AlertDialog dialog = dialogBuilder.create();
         return( dialog );
     }
