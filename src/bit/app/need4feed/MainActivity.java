@@ -81,6 +81,7 @@ public class MainActivity extends SherlockFragmentActivity
     	case R.id.menu_settings:
     		
     		break;
+    		
     	case R.id.menu_add_category:
             AddCategoryDialog addCategoryDialog = new AddCategoryDialog();
             addCategoryDialog.show( fm, "fragment_add_category" );

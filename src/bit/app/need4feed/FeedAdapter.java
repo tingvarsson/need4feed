@@ -25,6 +25,11 @@ public class FeedAdapter extends BaseAdapter
 		inflater = (LayoutInflater)activity
 				   .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
+	
+	public void setFeedList( List<Feed> fList )
+	{
+		feedList = fList;
+	}
 
 	public int getCount() 
 	{

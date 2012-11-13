@@ -1,6 +1,7 @@
 package bit.app.need4feed;
 
-import java.util.List;
+import bit.app.need4feed.AddFeedDialog.AddFeedDialogListener;
+import bit.app.need4feed.RemoveFeedDialog.RemoveFeedDialogListener;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -10,18 +11,23 @@ import com.actionbarsherlock.view.MenuItem;
 
 import android.os.Bundle;
 import android.content.Intent;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class CategoryActivity extends SherlockFragmentActivity 
+							  implements AddFeedDialogListener,
+							             RemoveFeedDialogListener
 {
 	public final static String FEED_ID = "bit.app.need4feed.FEED_ID";
 	
 	ActionBar actionBar;
 	ListView feedListView;
-	List<Feed> feedList;
+	FeedAdapter feedAdapter;
+	
+	long categoryId;
 	
 	DatabaseHandler databaseHandler;
 
@@ -38,10 +44,7 @@ public class CategoryActivity extends SherlockFragmentActivity
         
         // Fetch the message containing the category id
         Intent intent = getIntent();
-        int categoryId = intent.getIntExtra( MainActivity.CATEGORY_ID, 0 );
-        
-        // Fetch all feeds for categoryId
-        feedList = databaseHandler.getFeeds( categoryId );
+        categoryId = intent.getIntExtra( MainActivity.CATEGORY_ID, 0 );
         
         feedListView.setOnItemClickListener( new OnItemClickListener() 
         {
@@ -55,8 +58,10 @@ public class CategoryActivity extends SherlockFragmentActivity
 			}
 		} );
         
-        feedListView.setAdapter( new FeedAdapter( CategoryActivity.this, 
-        		                                  feedList ) );
+        feedAdapter = new FeedAdapter( CategoryActivity.this, 
+        		                       databaseHandler.getFeeds( categoryId ) );
+        
+        feedListView.setAdapter( feedAdapter );
     }
     
     @Override
@@ -75,19 +80,40 @@ public class CategoryActivity extends SherlockFragmentActivity
     @Override
     public boolean onOptionsItemSelected( MenuItem item ) 
     {
-        if( item.getItemId() == R.id.menu_settings ) 
-        {
-
-        }
-        if( item.getItemId() == R.id.menu_add_feed )
-        {
-
-        }
-        if( item.getItemId() == R.id.menu_remove_category )
-        {
-
-        }
-        
+    	FragmentManager fm = getSupportFragmentManager();
+    	Bundle args = new Bundle();
+        args.putLong( "categoryId", categoryId );
+    	
+    	switch( item.getItemId() )
+    	{
+    	case R.id.menu_settings:
+    		
+    		break;
+    		
+    	case R.id.menu_add_feed:
+            AddFeedDialog addFeedDialog = new AddFeedDialog();
+            addFeedDialog.setArguments( args );
+            addFeedDialog.show( fm, "fragment_add_feed" );
+    		break;
+    		
+    	case R.id.menu_remove_category:
+            RemoveFeedDialog removeFeedDialog = new RemoveFeedDialog();
+            removeFeedDialog.setArguments( args );
+            removeFeedDialog.show( fm, "fragment_remove_feed" );
+    		break;
+    	}
         return( super.onOptionsItemSelected( item ) );
+    }
+
+	public void onFinishAddFeedDialog() 
+	{
+		feedAdapter.setFeedList( databaseHandler.getFeeds( categoryId ) );
+		feedAdapter.notifyDataSetChanged();
+	}
+    
+    public void onFinishRemoveFeedDialog()
+    {
+    	feedAdapter.setFeedList( databaseHandler.getFeeds( categoryId ) );
+    	feedAdapter.notifyDataSetChanged();
     }
 }

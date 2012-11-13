@@ -180,12 +180,18 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	
 	public void deleteCategory( long categoryId )
 	{
+		// FIXME: What to do with all feeds with this category id?! Remove or move to some standard category?
 		this.db.delete( TABLE_CATEGORIES, KEY_CATEGORY_ID + " = ?",
 	               new String[] { String.valueOf( categoryId ) } );
 	}
 	
 	public void deleteFeed( long feedId )
 	{
+		// Delete all posts belonging to the feed
+		this.db.delete( TABLE_POSTS, KEY_POST_FEED + " = ?",
+	               new String[] { String.valueOf( feedId ) } );
+		
+		// Delete the actual feed
 		this.db.delete( TABLE_FEEDS, KEY_FEED_ID + " = ?",
 	               new String[] { String.valueOf( feedId ) } );
 	}
