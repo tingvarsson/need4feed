@@ -52,19 +52,18 @@ public class RemoveCategoryDialog extends DialogFragment
         MainApplication appContext = (MainApplication)getActivity().getApplicationContext();
         databaseHandler = appContext.getDatabaseHandler();
         
-        dialogBuilder.setSingleChoiceItems( databaseHandler.getCategoryNames(), 0, null );
+        dialogBuilder.setSingleChoiceItems( databaseHandler.getCategoryNames(), -1, null );
  
         // Setup buttons
         dialogBuilder.setPositiveButton( "Remove", new OnClickListener() 
         {
-            public void onClick(DialogInterface dialog, int which) 
+            public void onClick( DialogInterface dialog, int which ) 
             {
-            	// FIXME: Add handling of position <= 0!
                 AlertDialog alert = (AlertDialog)dialog;
                 int position = alert.getListView().getCheckedItemPosition();
                 
                 // Validate that it is a correct postion
-                if( position > 0 )
+                if( position >= 0 )
                 {
 	                categoryList = databaseHandler.getCategories();
 	                databaseHandler.deleteCategory( categoryList.get( position ).getId() );
