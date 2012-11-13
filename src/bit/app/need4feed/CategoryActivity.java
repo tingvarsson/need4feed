@@ -40,7 +40,7 @@ public class CategoryActivity extends SherlockFragmentActivity
         Intent intent = getIntent();
         int categoryId = intent.getIntExtra( MainActivity.CATEGORY_ID, 0 );
         
-        // TODO: Fetch all feeds for categoryId, for now a dummy list
+        // Fetch all feeds for categoryId
         feedList = databaseHandler.getFeeds( categoryId );
         
         feedListView.setOnItemClickListener( new OnItemClickListener() 

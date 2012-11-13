@@ -32,7 +32,7 @@ public class AddCategoryDialog extends DialogFragment
 
     @Override
     public View onCreateView( LayoutInflater inflater, ViewGroup container,
-                              Bundle savedInstanceState ) 
+                              Bundle savedInstanceState )
     {
     	// Setup the layout along with a title
     	View view = inflater.inflate( R.layout.fragment_add_category, container );

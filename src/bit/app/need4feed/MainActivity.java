@@ -79,19 +79,21 @@ public class MainActivity extends SherlockFragmentActivity
     @Override
     public boolean onOptionsItemSelected( MenuItem item ) 
     {
+    	FragmentManager fm = getSupportFragmentManager();
+    	
     	switch( item.getItemId() )
     	{
     	case R.id.menu_settings:
     		
     		break;
     	case R.id.menu_add_category:
-        	FragmentManager fm = getSupportFragmentManager();
             AddCategoryDialog addCategoryDialog = new AddCategoryDialog();
-            addCategoryDialog.show(fm, "fragment_add_category");
+            addCategoryDialog.show( fm, "fragment_add_category" );
     		break;
     		
     	case R.id.menu_remove_category:
-    		
+            RemoveCategoryDialog removeCategoryDialog = new RemoveCategoryDialog();
+            removeCategoryDialog.show( fm, "fragment_remove_category" );
     		break;
     	}
         return( super.onOptionsItemSelected( item ) );
@@ -106,8 +108,9 @@ public class MainActivity extends SherlockFragmentActivity
     	categoryAdapter.notifyDataSetChanged();
     }
     
-    public void onFinishRemoveCategoryDialog( int categoryId )
+    public void onFinishRemoveCategoryDialog( int categoryPosition )
     {
-    	
+    	categoryList.remove( categoryPosition );
+    	categoryAdapter.notifyDataSetChanged();
     }
 }
