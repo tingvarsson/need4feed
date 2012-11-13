@@ -1,6 +1,6 @@
 package bit.app.need4feed;
 
-public class Feed 
+public class Feed  implements Comparable<Feed>
 {
 	protected long id;
 	protected long categoryId;
@@ -27,4 +27,9 @@ public class Feed
 	
 	public String getLink() { return( this.link ); }
 	public void setLink( String link ) { this.link = link; }
+	
+	public int compareTo( Feed another ) 
+	{
+		return( this.getTitle().compareToIgnoreCase( another.getTitle() ) );
+	}
 }
