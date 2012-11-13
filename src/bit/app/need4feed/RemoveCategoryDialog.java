@@ -44,7 +44,7 @@ public class RemoveCategoryDialog extends DialogFragment
     @Override
     public Dialog onCreateDialog( Bundle savedInstanceState ) 
     {
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder( getActivity() );
  
         dialogBuilder.setTitle("Remove Category");
         
@@ -57,21 +57,21 @@ public class RemoveCategoryDialog extends DialogFragment
         {
         	categoryNames[ i ] = categoryList.get( i ).getName();
         }
- 
+        
         dialogBuilder.setSingleChoiceItems( categoryNames, 0, null );
  
-        dialogBuilder.setPositiveButton( "OK", new OnClickListener() 
+        dialogBuilder.setPositiveButton( "Remove", new OnClickListener() 
         {
             public void onClick(DialogInterface dialog, int which) 
             {
                 AlertDialog alert = (AlertDialog)dialog;
                 int position = alert.getListView().getCheckedItemPosition();
-                databaseHandler.deleteCategory( categoryList.get( position).getId() );
+                databaseHandler.deleteCategory( categoryList.get( position ).getId() );
                 removeCategoryDialogListener.onFinishRemoveCategoryDialog( position );
             }
         } );
  
-        dialogBuilder.setNegativeButton("Cancel", null);
+        dialogBuilder.setNegativeButton( "Cancel", null );
  
         AlertDialog dialog = dialogBuilder.create();
         return( dialog );

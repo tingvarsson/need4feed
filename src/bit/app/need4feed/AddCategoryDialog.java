@@ -1,18 +1,12 @@
 package bit.app.need4feed;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.view.WindowManager.LayoutParams;
-import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
 
 public class AddCategoryDialog extends DialogFragment 
 {
@@ -21,72 +15,34 @@ public class AddCategoryDialog extends DialogFragment
         void onFinishAddCategoryDialog( String categoryName );
     }
 
-    private EditText categoryNameEditText;
-    private Button cancelButton;
-    private Button addButton;
-
     public AddCategoryDialog() 
     {
         // Empty constructor required for DialogFragment
     }
-
+    
     @Override
-    public View onCreateView( LayoutInflater inflater, ViewGroup container,
-                              Bundle savedInstanceState )
+    public Dialog onCreateDialog( Bundle savedInstanceState ) 
     {
-    	// Setup the layout along with a title
-    	View view = inflater.inflate( R.layout.fragment_add_category, container );
-    	getDialog().setTitle( "Add Category" );
-    	
-    	// Find all the required components
-        categoryNameEditText = (EditText)view.findViewById( R.id.txt_category_name );
-        cancelButton = (Button)view.findViewById( R.id.add_category_cancel );
-        addButton = (Button)view.findViewById( R.id.add_category_ok );
-
-        // Show soft keyboard automatically
-        categoryNameEditText.requestFocus();
-        getDialog().getWindow().setSoftInputMode( LayoutParams.SOFT_INPUT_STATE_VISIBLE );
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder( getActivity() );
+ 
+        dialogBuilder.setTitle("Add Category");
         
-        // Setup an editor action listerner
-        categoryNameEditText.setOnEditorActionListener( new OnEditorActionListener()
+        final EditText input = new EditText( getActivity() );
+        dialogBuilder.setView( input );
+        
+        dialogBuilder.setPositiveButton( "Add", new OnClickListener() 
         {
-        	public boolean onEditorAction( TextView v, int actionId, KeyEvent event ) 
+            public void onClick(DialogInterface dialog, int which) 
             {
-                if( EditorInfo.IME_ACTION_DONE == actionId ) 
-                {
-                	actionDone();
-                    return( true );
-                }
-                return( false );
+            	AddCategoryDialogListener activity = (AddCategoryDialogListener)getActivity();
+                activity.onFinishAddCategoryDialog( input.getText().toString() );
+                dismiss();
             }
         } );
         
-        // Setup on click button listeners
+        dialogBuilder.setNegativeButton( "Cancel", null );
         
-        cancelButton.setOnClickListener( new OnClickListener() 
-        {
-			public void onClick( View v ) 
-			{
-				dismiss();
-			}
-		} );
-        
-        addButton.setOnClickListener( new OnClickListener() 
-        {	
-			public void onClick( View v ) 
-			{
-				actionDone();
-			}
-		} );
-
-        return( view );
-    }
-    
-    private void actionDone()
-    {
-    	// Return input text to activity
-    	AddCategoryDialogListener activity = (AddCategoryDialogListener)getActivity();
-        activity.onFinishAddCategoryDialog( categoryNameEditText.getText().toString() );
-        dismiss();
+        AlertDialog dialog = dialogBuilder.create();
+        return( dialog );
     }
 }
