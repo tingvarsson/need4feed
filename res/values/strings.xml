@@ -6,5 +6,6 @@
     <string name="menu_add_feed">Add Feed</string>
     <string name="menu_remove_category">Remove Category</string>
     <string name="menu_remove_feed">Remove Feed</string>
+    <string name="category_name">Category name</string>
 
 </resources>
