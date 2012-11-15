@@ -20,6 +20,8 @@ public class RemoveFeedDialog extends DialogFragment
 	
 	private RemoveFeedDialogListener removeFeedDialogListener;
 	private DatabaseHandler databaseHandler;
+	
+	private long categoryId;
 
 	public RemoveFeedDialog() 
 	{
@@ -48,11 +50,13 @@ public class RemoveFeedDialog extends DialogFragment
  
         dialogBuilder.setTitle("Remove Category");
         
+        categoryId = getArguments().getLong( "categoryId", -1 );
+        
         // Setup the content: radio button list of categories
         MainApplication appContext = (MainApplication)getActivity().getApplicationContext();
         databaseHandler = appContext.getDatabaseHandler();
         
-        dialogBuilder.setSingleChoiceItems( databaseHandler.getCategoryNames(), -1, null );
+        dialogBuilder.setSingleChoiceItems( databaseHandler.getFeedNames( categoryId ), -1, null );
  
         // Setup buttons
         dialogBuilder.setPositiveButton( "Remove", new OnClickListener() 
@@ -66,7 +70,7 @@ public class RemoveFeedDialog extends DialogFragment
                 if( position >= 0 )
                 {
 	                feedList = databaseHandler.getFeeds( 0 );
-	                databaseHandler.deleteCategory( feedList.get( position ).getId() );
+	                databaseHandler.deleteFeed( feedList.get( position ).getId() );
 	                removeFeedDialogListener.onFinishRemoveFeedDialog();
                 }
             }

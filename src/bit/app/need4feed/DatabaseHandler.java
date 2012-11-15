@@ -231,8 +231,9 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	public String[] getCategoryNames()
 	{
 		ArrayList<String> categoryNames = new ArrayList<String>();
+		
 		// Select All Query
-	    String selectQuery = "SELECT * FROM " + TABLE_CATEGORIES + 
+	    String selectQuery = "SELECT " + KEY_CATEGORY_NAME + " FROM " + TABLE_CATEGORIES + 
 	    		             " ORDER BY "+ KEY_CATEGORY_NAME + " COLLATE NOCASE";
 	 
 	    Cursor cursor = this.db.rawQuery( selectQuery, null );
@@ -242,7 +243,7 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	    {
 	        do
 	        {
-	        	categoryNames.add( cursor.getString( 1 ) );
+	        	categoryNames.add( cursor.getString( 0 ) );
 	        } while( cursor.moveToNext() );
 	    }
 	    
@@ -258,7 +259,7 @@ public class DatabaseHandler extends SQLiteOpenHelper
 		List<Feed> feedList = new ArrayList<Feed>();
 		
 		// Select All Query
-	    String selectQuery = "SELECT  * FROM " + TABLE_FEEDS + 
+	    String selectQuery = "SELECT * FROM " + TABLE_FEEDS + 
 	                         " ORDER BY "+ KEY_FEED_TITLE + " COLLATE NOCASE";
 	 
 	    Cursor cursor = this.db.rawQuery( selectQuery, null );
@@ -279,6 +280,30 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	    cursor.close();
 		
 		return( feedList );
+	}
+	
+	public String[] getFeedNames( long categoryId )
+	{
+		ArrayList<String> feedNames = new ArrayList<String>();
+		
+		// Select All Query
+	    String selectQuery = "SELECT " + KEY_FEED_TITLE + " FROM " + TABLE_FEEDS + 
+	                         " ORDER BY "+ KEY_FEED_TITLE + " COLLATE NOCASE";
+	 
+	    Cursor cursor = this.db.rawQuery( selectQuery, null );
+	 
+	    // looping through all rows and adding to list
+	    if( cursor.moveToFirst() ) 
+	    {
+	        do
+	        {
+	        	feedNames.add( cursor.getString( 0 ) );
+	        } while( cursor.moveToNext() );
+	    }
+	    
+	    cursor.close();
+		
+		return( (String[])feedNames.toArray( new String[0] ) );
 	}
 	
 	public Feed getFeed( long feedId )
