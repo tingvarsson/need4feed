@@ -2,6 +2,11 @@ package bit.app.need4feed;
 
 import java.util.List;
 
+import bit.app.need4feed.type.Post;
+import bit.app.need4feed.type.PostAdapter;
+import bit.app.need4feed.util.DatabaseHandler;
+import bit.app.need4feed.util.RssHandler;
+
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;

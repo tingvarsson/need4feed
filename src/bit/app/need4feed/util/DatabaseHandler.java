@@ -1,7 +1,11 @@
-package bit.app.need4feed;
+package bit.app.need4feed.util;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import bit.app.need4feed.type.Category;
+import bit.app.need4feed.type.Feed;
+import bit.app.need4feed.type.Post;
 
 import android.content.ContentValues;
 import android.content.Context;

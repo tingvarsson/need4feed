@@ -2,6 +2,8 @@ package bit.app.need4feed;
 
 import bit.app.need4feed.AddCategoryDialog.AddCategoryDialogListener;
 import bit.app.need4feed.RemoveCategoryDialog.RemoveCategoryDialogListener;
+import bit.app.need4feed.type.CategoryAdapter;
+import bit.app.need4feed.util.DatabaseHandler;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;

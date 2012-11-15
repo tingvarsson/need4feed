@@ -2,6 +2,8 @@ package bit.app.need4feed;
 
 import bit.app.need4feed.AddFeedDialog.AddFeedDialogListener;
 import bit.app.need4feed.RemoveFeedDialog.RemoveFeedDialogListener;
+import bit.app.need4feed.type.FeedAdapter;
+import bit.app.need4feed.util.DatabaseHandler;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;

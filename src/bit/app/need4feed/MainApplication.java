@@ -1,5 +1,6 @@
 package bit.app.need4feed;
 
+import bit.app.need4feed.util.DatabaseHandler;
 import android.app.Application;
 
 public class MainApplication extends Application 

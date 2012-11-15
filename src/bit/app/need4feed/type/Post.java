@@ -1,4 +1,4 @@
-package bit.app.need4feed;
+package bit.app.need4feed.type;
 
 public class Post 
 {

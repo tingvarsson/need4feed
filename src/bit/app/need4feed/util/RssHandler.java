@@ -1,4 +1,4 @@
-package bit.app.need4feed;
+package bit.app.need4feed.util;
 
 import java.io.IOException;
 import java.net.URL;
@@ -13,6 +13,8 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
+
+import bit.app.need4feed.type.Post;
 
 import android.util.Log;
 

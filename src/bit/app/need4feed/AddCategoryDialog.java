@@ -1,5 +1,7 @@
 package bit.app.need4feed;
 
+import bit.app.need4feed.type.Category;
+import bit.app.need4feed.util.DatabaseHandler;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;

@@ -1,5 +1,9 @@
 package bit.app.need4feed;
 
+import bit.app.need4feed.type.Feed;
+import bit.app.need4feed.type.Post;
+import bit.app.need4feed.util.DatabaseHandler;
+
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;

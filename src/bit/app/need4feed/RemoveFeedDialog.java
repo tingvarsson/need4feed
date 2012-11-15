@@ -2,6 +2,9 @@ package bit.app.need4feed;
 
 import java.util.List;
 
+import bit.app.need4feed.type.Feed;
+import bit.app.need4feed.util.DatabaseHandler;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;

@@ -1,6 +1,10 @@
-package bit.app.need4feed;
+package bit.app.need4feed.type;
 
 import java.util.List;
+
+import bit.app.need4feed.R;
+import bit.app.need4feed.R.id;
+import bit.app.need4feed.R.layout;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,40 +14,40 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-public class FeedAdapter extends BaseAdapter 
+public class CategoryAdapter extends BaseAdapter 
 {
 	private Activity activity;
-	private List<Feed> feedList;
+	private List<Category> categoryList;
 	private static LayoutInflater inflater = null;
 	
 	ViewHolder holder;
 
-	public FeedAdapter( Activity a, List<Feed> fList ) 
+	public CategoryAdapter( Activity a, List<Category> cList )
 	{
 		activity = a;
-		feedList = fList;
+		categoryList = cList;
 		inflater = (LayoutInflater)activity
 				   .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
 	
-	public void setFeedList( List<Feed> fList )
+	public void setCategoryList( List<Category> cList )
 	{
-		feedList = fList;
+		categoryList = cList;
 	}
 
 	public int getCount() 
 	{
-		return( this.feedList.toArray().length );
+		return( this.categoryList.toArray().length );
 	}
 
 	public Object getItem( int position ) 
 	{
-		return( this.feedList.get( position ) );
+		return( this.categoryList.get( position ) );
 	}
 
 	public long getItemId( int position ) 
 	{
-		// TODO: Used for? this.feedList.get( position ).getId );
+		// TODO: Used for? this.categoryList.get( position ).getId );
 		return( position );
 	}
 	
@@ -58,9 +62,9 @@ public class FeedAdapter extends BaseAdapter
 
 		if (convertView == null) 
 		{
-			vi = inflater.inflate( R.layout.row_feed, null );
+			vi = inflater.inflate( R.layout.row_category, null );
 			holder = new ViewHolder();
-			holder.label = (TextView)vi.findViewById( R.id.title_row_feed );
+			holder.label = (TextView)vi.findViewById( R.id.title_row_category );
 			vi.setTag( holder );
 		} 
 		else
@@ -68,7 +72,7 @@ public class FeedAdapter extends BaseAdapter
 			holder = (ViewHolder)vi.getTag();
 		}
 
-		holder.label.setText( feedList.get( position ).getTitle() );
+		holder.label.setText( categoryList.get( position ).getName() );
 
 		return( vi );
 	}
