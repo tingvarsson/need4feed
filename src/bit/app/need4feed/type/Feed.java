@@ -6,7 +6,8 @@ public class Feed  implements Comparable<Feed>
 	protected long categoryId;
 	protected String title;
 	protected String link;
-	// TODO: Also available, do we need/want it? protected String description;
+	protected String feedLink;
+	protected String description;
 	
 	public Feed( long categoryId, String title, String link ) 
 	{ 
@@ -15,12 +16,14 @@ public class Feed  implements Comparable<Feed>
 		this.link = link;
 	}
 	
-	public Feed( long id, long categoryId, String title, String link ) 
+	public Feed( long id, long categoryId, String title, String link, String feedLink, String description ) 
 	{ 
 		this.id = id;
 		this.categoryId = categoryId;
 		this.title = title;
 		this.link = link;
+		this.feedLink = feedLink;
+		this.description = description;		
 	}
 	
 	public long getId() { return( this.id ); }
@@ -34,6 +37,12 @@ public class Feed  implements Comparable<Feed>
 	
 	public String getLink() { return( this.link ); }
 	public void setLink( String link ) { this.link = link; }
+	
+	public String getFeedLink() { return( this.feedLink ); }
+	public void setFeedLink( String feedLink ) { this.feedLink = feedLink; }
+	
+	public String getDescription() { return( this.description ); }
+	public void setDescription( String description ) { this.description = description; }
 	
 	public int compareTo( Feed another ) 
 	{

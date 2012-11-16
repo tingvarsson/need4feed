@@ -18,7 +18,7 @@ public class DatabaseHandler extends SQLiteOpenHelper
 {
 	// All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
  
     // Database Name
     private static final String DATABASE_NAME = "feeds";
@@ -36,6 +36,8 @@ public class DatabaseHandler extends SQLiteOpenHelper
     private static final String KEY_FEED_ID = "feed_id";
     private static final String KEY_FEED_TITLE = "feed_title";
     private static final String KEY_FEED_LINK = "feed_link";
+    private static final String KEY_FEED_FEEDLINK = "feed_feedlink";
+    private static final String KEY_FEED_DESCRIPTION = "feed_description";
     private static final String KEY_FEED_CATEGORY = "feed_category";
     
     // post keys
@@ -68,6 +70,7 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	    String CREATE_TABLE_FEEDS = "CREATE TABLE " + TABLE_FEEDS + 
 			   "(" + KEY_FEED_ID + " INTEGER PRIMARY KEY ASC, " + 
 			   KEY_FEED_TITLE + " TEXT, " + KEY_FEED_LINK + 
+			   " TEXT, " + KEY_FEED_FEEDLINK + " TEXT, " + KEY_FEED_DESCRIPTION + 
 			   " TEXT, " + KEY_FEED_CATEGORY + " INTEGER, FOREIGN KEY(" + 
 			   KEY_FEED_CATEGORY + ") REFERENCES " + TABLE_CATEGORIES + "(" + 
 			   KEY_CATEGORY_ID + ")" + ")";
@@ -115,6 +118,8 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	    ContentValues values = new ContentValues();
 	    values.put( KEY_FEED_TITLE, f.getTitle() );
 	    values.put( KEY_FEED_LINK, f.getLink() );
+	    values.put( KEY_FEED_FEEDLINK, f.getFeedLink() );
+	    values.put( KEY_FEED_DESCRIPTION, f.getDescription() );
 	    values.put( KEY_FEED_CATEGORY, f.getCategoryId() );
 	 
 	    //  Insert the row, returned is the rowid used as feed id
@@ -122,7 +127,8 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	    
 	    Log.d( "Database Handler", "Feed added, id: " + Long.toString( f.getId() ) +
 	    	   " , title: " + f.getTitle() + " , link: " + f.getLink() + 
-	    	   " , category id: " + Long.toString( f.getCategoryId() ) );
+	    	   " , feed link: " + f.getFeedLink() + " , description: " + 
+	    	   f.getDescription() + " , category id: " + Long.toString( f.getCategoryId() ) );
 	}
 	
 	public void addPost( Post p )
@@ -160,6 +166,8 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	    ContentValues values = new ContentValues();
 	    values.put( KEY_FEED_TITLE, f.getTitle() );
 	    values.put( KEY_FEED_LINK, f.getLink() );
+	    values.put( KEY_FEED_FEEDLINK, f.getFeedLink() );
+	    values.put( KEY_FEED_DESCRIPTION, f.getDescription() );
 	    values.put( KEY_FEED_CATEGORY, f.getCategoryId() );
 	 
 	    // updating row
@@ -274,9 +282,11 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	        do
 	        {
 	        	Feed f = new Feed( Integer.parseInt( cursor.getString( 0 ) ),
-	    		                   Integer.parseInt( cursor.getString( 3 ) ),
+	    		                   Integer.parseInt( cursor.getString( 5 ) ),
 	                               cursor.getString( 1 ),
-	                               cursor.getString( 2 ) );
+	                               cursor.getString( 2 ),
+	                               cursor.getString( 3 ),
+	                               cursor.getString( 4 ) );
 	        	feedList.add( f );
 	        } while( cursor.moveToNext() );
 	    }
@@ -326,9 +336,11 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	    }
 	 
 	    Feed f = new Feed( Integer.parseInt( cursor.getString( 0 ) ),
-	    		           Integer.parseInt( cursor.getString( 3 ) ),
+	    		           Integer.parseInt( cursor.getString( 5 ) ),
 	                       cursor.getString( 1 ),
-	                       cursor.getString( 2 ) );
+	                       cursor.getString( 2 ),
+	                       cursor.getString( 3 ),
+                           cursor.getString( 4 ) );
 	    
 	    cursor.close();
 		

@@ -3,8 +3,6 @@ package bit.app.need4feed.type;
 import java.util.List;
 
 import bit.app.need4feed.R;
-import bit.app.need4feed.R.id;
-import bit.app.need4feed.R.layout;
 
 import android.app.Activity;
 import android.content.Context;

@@ -18,7 +18,7 @@ import bit.app.need4feed.type.Post;
 
 import android.util.Log;
 
-class RssHandler extends DefaultHandler 
+public class RssHandler extends DefaultHandler 
 {
 	// Feed and Post objects to use for temporary storage
 	private Post currentPost = new Post();
