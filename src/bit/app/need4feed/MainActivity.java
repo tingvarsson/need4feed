@@ -2,6 +2,7 @@ package bit.app.need4feed;
 
 import bit.app.need4feed.AddCategoryDialog.AddCategoryDialogListener;
 import bit.app.need4feed.RemoveCategoryDialog.RemoveCategoryDialogListener;
+import bit.app.need4feed.type.Category;
 import bit.app.need4feed.type.CategoryAdapter;
 import bit.app.need4feed.util.DatabaseHandler;
 
@@ -49,7 +50,7 @@ public class MainActivity extends SherlockFragmentActivity
 			{
 				Intent intent = new Intent( MainActivity.this, 
 						                    CategoryActivity.class );
-			    intent.putExtra( CATEGORY_ID, position );
+			    intent.putExtra( CATEGORY_ID, ( (Category)categoryAdapter.getItem( position ) ).getId() );
 			    startActivity( intent );
 			}
 		} );

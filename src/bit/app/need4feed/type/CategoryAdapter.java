@@ -45,8 +45,7 @@ public class CategoryAdapter extends BaseAdapter
 
 	public long getItemId( int position ) 
 	{
-		// TODO: Used for? this.categoryList.get( position ).getId );
-		return( position );
+		return( this.categoryList.get( position ).getId() );
 	}
 	
 	public static class ViewHolder 

@@ -41,8 +41,7 @@ public class PostAdapter extends BaseAdapter
 
 	public long getItemId( int position ) 
 	{
-		// TODO: Used for? this.categoryList.get( position ).getId );
-		return( position );
+		return( this.postList.get( position ).getId() );
 	}
 	
 	public static class ViewHolder
@@ -72,7 +71,7 @@ public class PostAdapter extends BaseAdapter
 		}
 
 		holder.label.setText( postList.get( position ).getTitle() );
-		holder.details.setTag( postList.get( position ).getPubDate() );
+		holder.details.setText( postList.get( position ).getPubDate() );
 
 		return( vi );
 	}

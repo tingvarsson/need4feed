@@ -18,7 +18,7 @@ public class DatabaseHandler extends SQLiteOpenHelper
 {
 	// All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 1;
  
     // Database Name
     private static final String DATABASE_NAME = "feeds";
@@ -271,10 +271,12 @@ public class DatabaseHandler extends SQLiteOpenHelper
 		List<Feed> feedList = new ArrayList<Feed>();
 		
 		// Select All Query
-	    String selectQuery = "SELECT * FROM " + TABLE_FEEDS + 
+	    String selectQuery = "SELECT * FROM " + TABLE_FEEDS +  
+				             " WHERE " + KEY_FEED_CATEGORY + " =? " + 
 	                         " ORDER BY "+ KEY_FEED_TITLE + " COLLATE NOCASE";
 	 
-	    Cursor cursor = this.db.rawQuery( selectQuery, null );
+	    Cursor cursor = this.db.rawQuery( selectQuery, 
+	    		                          new String[] { Long.toString( categoryId ) } );
 	 
 	    // looping through all rows and adding to list
 	    if( cursor.moveToFirst() ) 
@@ -302,9 +304,11 @@ public class DatabaseHandler extends SQLiteOpenHelper
 		
 		// Select All Query
 	    String selectQuery = "SELECT " + KEY_FEED_TITLE + " FROM " + TABLE_FEEDS + 
+	    					 " WHERE " + KEY_FEED_CATEGORY + " =? " + 
 	                         " ORDER BY "+ KEY_FEED_TITLE + " COLLATE NOCASE";
 	 
-	    Cursor cursor = this.db.rawQuery( selectQuery, null );
+	    Cursor cursor = this.db.rawQuery( selectQuery, 
+                                          new String[] { Long.toString( categoryId ) } );
 	 
 	    // looping through all rows and adding to list
 	    if( cursor.moveToFirst() ) 
@@ -322,25 +326,33 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	
 	public Feed getFeed( long feedId )
 	{
+		Feed f = null;
+		
 	    Cursor cursor = this.db.query( TABLE_FEEDS, new String[] { KEY_FEED_ID,
 	    													  KEY_FEED_TITLE, 
 	    		                                              KEY_FEED_LINK,
+	    		                                              KEY_FEED_FEEDLINK,
+	    		                                              KEY_FEED_DESCRIPTION,
 	    		                                              KEY_FEED_CATEGORY }, 
 	                              KEY_FEED_ID + "=?",
 	                              new String[] { String.valueOf( feedId ) }, 
-	                              null, null, null, null);
+	                              null, null, null, null );
 	    
 	    if( cursor != null )
 	    {
 	        cursor.moveToFirst();
+	        
+	        // FIXE: What if empty cursor? Double check all db funcs on this.
+	        
+	        f = new Feed( Integer.parseInt( cursor.getString( 0 ) ),
+	    		          Integer.parseInt( cursor.getString( 5 ) ),
+	                      cursor.getString( 1 ),
+	                      cursor.getString( 2 ),
+	                      cursor.getString( 3 ),
+                          cursor.getString( 4 ) );
 	    }
 	 
-	    Feed f = new Feed( Integer.parseInt( cursor.getString( 0 ) ),
-	    		           Integer.parseInt( cursor.getString( 5 ) ),
-	                       cursor.getString( 1 ),
-	                       cursor.getString( 2 ),
-	                       cursor.getString( 3 ),
-                           cursor.getString( 4 ) );
+	    
 	    
 	    cursor.close();
 		
@@ -352,9 +364,11 @@ public class DatabaseHandler extends SQLiteOpenHelper
 		List<Post> postList = new ArrayList<Post>();
 		
 		// Select All Query
-	    String selectQuery = "SELECT  * FROM " + TABLE_POSTS;
+	    String selectQuery = "SELECT  * FROM " + TABLE_POSTS + " WHERE " + 
+		                     KEY_POST_FEED + " =?";
 	 
-	    Cursor cursor = this.db.rawQuery( selectQuery, null );
+	    Cursor cursor = this.db.rawQuery( selectQuery, 
+                                          new String[] { Long.toString( feedId ) } );
 	 
 	    // looping through all rows and adding to list
 	    if( cursor.moveToFirst() ) 

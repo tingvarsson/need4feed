@@ -47,7 +47,7 @@ public class PostActivity extends SherlockFragmentActivity
         
         // Fetch the message containing the feed id
         Intent intent = getIntent();
-        int postId = intent.getIntExtra( FeedActivity.POST_ID, 0 );
+        long postId = intent.getLongExtra( FeedActivity.POST_ID, 0 );
         
         displayedPost = databaseHandler.getPost( postId );
         

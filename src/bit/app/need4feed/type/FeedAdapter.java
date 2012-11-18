@@ -45,8 +45,7 @@ public class FeedAdapter extends BaseAdapter
 
 	public long getItemId( int position ) 
 	{
-		// TODO: Used for? this.feedList.get( position ).getId );
-		return( position );
+		return( this.feedList.get( position ).getId() );
 	}
 	
 	public static class ViewHolder 

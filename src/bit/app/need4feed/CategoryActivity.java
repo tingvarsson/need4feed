@@ -2,6 +2,7 @@ package bit.app.need4feed;
 
 import bit.app.need4feed.AddFeedDialog.AddFeedDialogListener;
 import bit.app.need4feed.RemoveFeedDialog.RemoveFeedDialogListener;
+import bit.app.need4feed.type.Feed;
 import bit.app.need4feed.type.FeedAdapter;
 import bit.app.need4feed.util.DatabaseHandler;
 
@@ -46,7 +47,7 @@ public class CategoryActivity extends SherlockFragmentActivity
         
         // Fetch the message containing the category id
         Intent intent = getIntent();
-        categoryId = intent.getIntExtra( MainActivity.CATEGORY_ID, 0 );
+        categoryId = intent.getLongExtra( MainActivity.CATEGORY_ID, 0 );
         
         feedListView.setOnItemClickListener( new OnItemClickListener() 
         {
@@ -55,7 +56,7 @@ public class CategoryActivity extends SherlockFragmentActivity
 			{
 				Intent intent = new Intent( CategoryActivity.this, 
 						                    FeedActivity.class );
-			    intent.putExtra( FEED_ID, position );
+			    intent.putExtra( FEED_ID, ( (Feed)feedAdapter.getItem( position ) ).getId() );
 			    startActivity( intent );
 			}
 		} );
@@ -98,7 +99,7 @@ public class CategoryActivity extends SherlockFragmentActivity
             addFeedDialog.show( fm, "fragment_add_feed" );
     		break;
     		
-    	case R.id.menu_remove_category:
+    	case R.id.menu_remove_feed:
             RemoveFeedDialog removeFeedDialog = new RemoveFeedDialog();
             removeFeedDialog.setArguments( args );
             removeFeedDialog.show( fm, "fragment_remove_feed" );

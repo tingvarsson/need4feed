@@ -2,6 +2,7 @@ package bit.app.need4feed;
 
 import bit.app.need4feed.type.Feed;
 import bit.app.need4feed.util.DatabaseHandler;
+import bit.app.need4feed.util.RssHandler;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -68,11 +69,24 @@ public class AddFeedDialog extends DialogFragment
             	
             	// Validate that it is a non-empty string and that the
             	// category id is valid
-            	if( ( !inputString.equals( "" ) ) && ( categoryId > 0 ) )
+            	if( ( !inputString.equals( "" ) ) && ( categoryId >= 0 ) )
             	{
-	            	Feed newFeed = new Feed( categoryId, "Test", inputString );
-	            	databaseHandler.addFeed( newFeed );
-	            	addFeedDialogListener.onFinishAddFeedDialog();
+            		RssHandler rssHandler = new RssHandler();
+	            	Feed newFeed = rssHandler.getFeed( inputString );
+	            	
+	            	if( newFeed == null )
+	            	{
+	            		// Invalid url or invalid rss feed
+	            		
+	            		// TODO: Keep dialog open and notify about faulty url?
+	            	}
+	            	else
+	            	{
+	            		// Valid url and created feed, add category
+	            		newFeed.setCategoryId( categoryId );
+		            	databaseHandler.addFeed( newFeed );
+		            	addFeedDialogListener.onFinishAddFeedDialog();
+	            	}
             	}
             }
         } );
