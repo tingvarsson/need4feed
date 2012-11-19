@@ -280,6 +280,36 @@ public class DatabaseHandler extends SQLiteOpenHelper
 		return( (String[])categoryNames.toArray( new String[0] ) );
 	}
 	
+	public List<Feed> getAllFeeds()
+	{
+		List<Feed> feedList = new ArrayList<Feed>();
+		
+		// Select All Query
+	    String selectQuery = "SELECT * FROM " + TABLE_FEEDS +
+	                         " ORDER BY "+ KEY_FEED_TITLE + " COLLATE NOCASE";
+	 
+	    Cursor cursor = this.db.rawQuery( selectQuery, null );
+	 
+	    // looping through all rows and adding to list
+	    if( cursor.moveToFirst() ) 
+	    {
+	        do
+	        {
+	        	Feed f = new Feed( Integer.parseInt( cursor.getString( 0 ) ),
+	    		                   Integer.parseInt( cursor.getString( 5 ) ),
+	                               cursor.getString( 1 ),
+	                               cursor.getString( 2 ),
+	                               cursor.getString( 3 ),
+	                               cursor.getString( 4 ) );
+	        	feedList.add( f );
+	        } while( cursor.moveToNext() );
+	    }
+	    
+	    cursor.close();
+		
+		return( feedList );
+	}
+	
 	public List<Feed> getFeeds( long categoryId )
 	{
 		List<Feed> feedList = new ArrayList<Feed>();
@@ -436,13 +466,15 @@ public class DatabaseHandler extends SQLiteOpenHelper
 		return( p );
 	}
 	
-	public int getPostCount()
+	public int getPostCount( long feedId )
 	{
 		int count;
 		
-		String countQuery = "SELECT  * FROM " + TABLE_POSTS;
+		String countQuery = "SELECT  * FROM " + TABLE_POSTS + " WHERE " + 
+                            KEY_POST_FEED + " =?";
         
-        Cursor cursor = this.db.rawQuery(countQuery, null);
+        Cursor cursor = this.db.rawQuery( countQuery, 
+        		                          new String[] { Long.toString( feedId ) } );
         count = cursor.getCount();
         
         cursor.close();

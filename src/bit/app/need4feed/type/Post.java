@@ -1,6 +1,11 @@
 package bit.app.need4feed.type;
 
-public class Post 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class Post implements Comparable<Post>
 {
 	protected long id;
 	protected long feedId;
@@ -44,4 +49,23 @@ public class Post
 	
 	public String getThumbnail() { return( this.thumbnail ); }
 	public void setThumbnail( String thumbnail ) { this.thumbnail = thumbnail; }
+
+	public int compareTo( Post p ) 
+	{
+		DateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz");
+		
+		try 
+		{
+			Date date = formatter.parse( this.getPubDate() );
+			Date dateOther = formatter.parse( p.getPubDate() );
+			
+			return( date.compareTo( dateOther ) );
+			
+		} catch (ParseException e) {
+			e.printStackTrace();
+			// FIXME: How to properly handle this situation? aka. when we can't parse the date
+			// Should the actual parsing be moved perhaps? to a setPubdate or similar..
+			return( -1 );
+		}
+	}
 }

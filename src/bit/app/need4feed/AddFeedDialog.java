@@ -71,7 +71,7 @@ public class AddFeedDialog extends DialogFragment
             	// category id is valid
             	if( ( !inputString.equals( "" ) ) && ( categoryId >= 0 ) )
             	{
-            		RssHandler rssHandler = new RssHandler();
+            		RssHandler rssHandler = new RssHandler( databaseHandler );
 	            	Feed newFeed = rssHandler.getFeed( inputString );
 	            	
 	            	if( newFeed == null )
@@ -84,7 +84,13 @@ public class AddFeedDialog extends DialogFragment
 	            	{
 	            		// Valid url and created feed, add category
 	            		newFeed.setCategoryId( categoryId );
+	            		
+	            		// Add feed to the database
 		            	databaseHandler.addFeed( newFeed );
+		            	
+		            	// Fetch latest posts while we're at it and finish
+	            		rssHandler.getLatestPosts( newFeed );
+	            		
 		            	addFeedDialogListener.onFinishAddFeedDialog();
 	            	}
             	}

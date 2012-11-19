@@ -5,7 +5,6 @@ import java.util.List;
 import bit.app.need4feed.type.Post;
 import bit.app.need4feed.type.PostAdapter;
 import bit.app.need4feed.util.DatabaseHandler;
-import bit.app.need4feed.util.RssHandler;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -46,11 +45,8 @@ public class FeedActivity extends SherlockFragmentActivity
         Intent intent = getIntent();
         long feedId = intent.getLongExtra( CategoryActivity.FEED_ID, 0 );
         
-        // TODO: Fetch posts for feedId, for now just get them from online
-        
+        // Fetch posts for feedId
         postList = databaseHandler.getPosts( feedId );
-        RssHandler rssHandler = new RssHandler();
-        postList = rssHandler.getLatestPosts( databaseHandler.getFeed( feedId ) );
         
         postListView.setOnItemClickListener( new OnItemClickListener() 
         {

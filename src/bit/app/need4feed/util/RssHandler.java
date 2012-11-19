@@ -2,7 +2,8 @@ package bit.app.need4feed.util;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -21,17 +22,26 @@ import android.util.Log;
 
 public class RssHandler extends DefaultHandler 
 {
+	public static final int POST_LIMIT = 30;
+	
+	private DatabaseHandler db;
 	// Feed and Post objects to use for temporary storage
 	private Feed currentFeed;
 	private Post currentPost;
-	private ArrayList<Post> postList = new ArrayList<Post>();
+	
+	private List<Post> postList;
 
 	//Current characters being accumulated
 	StringBuffer chars = new StringBuffer();
+	
+	public RssHandler( DatabaseHandler db )
+	{
+		this.db = db;
+	}
 
 	@Override
 	public void startElement( String uri, String localName, 
-			                  String qName, Attributes atts ) 
+			                  String qName, Attributes atts ) throws SAXException 
 	{
 		chars = new StringBuffer();
 
@@ -45,6 +55,9 @@ public class RssHandler extends DefaultHandler
 				currentFeed.setTitle( currentPost.getTitle() );
 				currentFeed.setLink( currentPost.getLink() );
 				currentFeed.setDescription( currentPost.getDescription() );
+				
+				// Abort the parsing
+				throw new SAXException();
 			}
 			currentPost = new Post();
 		}
@@ -91,9 +104,31 @@ public class RssHandler extends DefaultHandler
 
 		if( localName.equalsIgnoreCase( "item" ) ) 
 		{
+			// Check if it is a new post or not
+			if( postList.size() > 0 )
+			{
+				if( currentPost.compareTo( postList.get( 0 ) ) <= 0 )
+				{
+					// TODO: Equal dates are now considered a post we don't want
+					// But could be that it is an updated version of that post?? Should we check more?
+					Log.d( "RSS Handler", "No more new posts." );
+					throw new SAXException();
+				}
+			}
+			
+			// Finalize the post
+			currentPost.setFeedId( currentFeed.getId() );
+			
+			// Add it to the database
+			db.addPost( currentPost );
 			Log.d( "RSS Handler", "Post added." );
-			postList.add( currentPost );
-			currentPost = new Post();
+			
+			int tooManyPosts = db.getPostCount( currentFeed.getId() ) - POST_LIMIT;
+			
+			if( tooManyPosts > 0 )
+			{
+				// TODO: Remove oldest posts!
+			}
 		}
 	}
 
@@ -153,14 +188,28 @@ public class RssHandler extends DefaultHandler
 		}
 
 		return( currentFeed );
-	}	
+	}
 	
-	public ArrayList<Post> getLatestPosts( Feed feed )
+	public void getAllLatestPosts()
+	{
+		List<Feed> feedList = db.getAllFeeds();
+		
+		for( Feed f: feedList )
+		{
+			getLatestPosts( f );
+		}
+	}
+	
+	public void getLatestPosts( Feed feed )
 	{
 		URL url = null;
 		
 		currentFeed = feed;
 		currentPost = new Post();
+		
+		// Fetch the current posts from the database to compare with
+		postList = db.getPosts( currentFeed.getId() );
+		Collections.sort( postList );
 		
 		try 
 		{
@@ -182,7 +231,5 @@ public class RssHandler extends DefaultHandler
 		} catch ( ParserConfigurationException e ) {
 			Log.e( "RSS Handler Parser Config", e.toString() );
 		}
-
-		return( postList );
 	}
 }
