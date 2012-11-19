@@ -39,6 +39,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="bit.app.need4feed.FeedActivity" />
         </activity>
+        <service android:name="RssService"></service>
     </application>
 
 </manifest>

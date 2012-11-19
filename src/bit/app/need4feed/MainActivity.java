@@ -40,6 +40,10 @@ public class MainActivity extends SherlockFragmentActivity
         actionBar = getSupportActionBar();
         categoryListView = (ListView)findViewById( R.id.categoryListView );
         
+        // Start the periodic background task fetching the latest posts
+        Intent intent = new Intent( this, RssService.class ); 
+        this.startService( intent ); 
+        
         MainApplication appContext = (MainApplication)getApplicationContext();
         databaseHandler = appContext.getDatabaseHandler();
         
