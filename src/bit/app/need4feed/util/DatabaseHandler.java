@@ -192,7 +192,16 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	
 	public void deleteCategory( long categoryId )
 	{
-		// FIXME: What to do with all feeds with this category id?! Remove or move to some standard category?
+		List<Feed> feedList = getFeeds( categoryId );
+		
+		// Delete all posts that belongs to the feeds as well as the feeds
+		// that belong to category id
+		for( Feed f : feedList )
+		{
+			deletePostOfFeed( f.getId() );
+			deleteFeed( f.getId() );
+		}
+		
 		this.db.delete( TABLE_CATEGORIES, KEY_CATEGORY_ID + " = ?",
 	               new String[] { String.valueOf( categoryId ) } );
 	}
@@ -200,11 +209,16 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	public void deleteFeed( long feedId )
 	{
 		// Delete all posts belonging to the feed
-		this.db.delete( TABLE_POSTS, KEY_POST_FEED + " = ?",
-	               new String[] { String.valueOf( feedId ) } );
+		deletePostOfFeed( feedId );
 		
 		// Delete the actual feed
 		this.db.delete( TABLE_FEEDS, KEY_FEED_ID + " = ?",
+	               new String[] { String.valueOf( feedId ) } );
+	}
+	
+	public void deletePostOfFeed( long feedId )
+	{
+		this.db.delete( TABLE_POSTS, KEY_POST_FEED + " = ?",
 	               new String[] { String.valueOf( feedId ) } );
 	}
 	
