@@ -107,7 +107,7 @@ public class RssHandler extends DefaultHandler
 			// Check if it is a new post or not
 			if( postList.size() > 0 )
 			{
-				if( currentPost.compareTo( postList.get( 0 ) ) <= 0 )
+				if( currentPost.compareTo( postList.get( postList.size() - 1 ) ) <= 0 )
 				{
 					// TODO: Equal dates are now considered a post we don't want
 					// But could be that it is an updated version of that post?? Should we check more?
