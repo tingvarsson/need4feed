@@ -7,5 +7,7 @@
     <string name="menu_remove_category">Remove Category</string>
     <string name="menu_remove_feed">Remove Feed</string>
     <string name="category_name">Category name</string>
+    <string name="title">Title</string>
+    <string name="feed">Feed</string>
 
 </resources>

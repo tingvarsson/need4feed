@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebView;
 import android.widget.TextView;
 
@@ -23,6 +24,7 @@ public class PostActivity extends SherlockFragmentActivity
 	ActionBar actionBar;
 	
 	TextView titleTextView;
+	TextView dateTextView;
 	TextView feedTextView;
 	WebView contentWebView;
 	
@@ -42,6 +44,7 @@ public class PostActivity extends SherlockFragmentActivity
         databaseHandler = appContext.getDatabaseHandler();
         
         titleTextView = (TextView)findViewById( R.id.titleTextView );
+        dateTextView = (TextView)findViewById( R.id.dateTextView );
         feedTextView = (TextView)findViewById( R.id.sourceTextView );
         contentWebView = (WebView)findViewById( R.id.contentWebView );
         
@@ -54,11 +57,17 @@ public class PostActivity extends SherlockFragmentActivity
         // Insert title, feed and content in the view
         titleTextView.setText( displayedPost.getTitle() );
         
-        sourceFeed = databaseHandler.getFeed( displayedPost.getFeedId() );
-        feedTextView.setText( sourceFeed.getTitle() );
+        dateTextView.setText( displayedPost.getPubDate() );
         
-        contentWebView.loadData( displayedPost.getDescription(), 
-        		                 "text/html; charset=UTF-8", null);
+        sourceFeed = databaseHandler.getFeed( displayedPost.getFeedId() );
+        feedTextView.setText( "Feed: " + sourceFeed.getTitle() );
+        
+        contentWebView.loadDataWithBaseURL( sourceFeed.getLink(), 
+        		                            displayedPost.getDescription(), 
+        		                            "text/html", "UTF-8", null );
+        
+        // Scale content and images to single column
+        contentWebView.getSettings().setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
         
         // Clicking the title will open the web browser and take the user
         // to the specific post
@@ -67,7 +76,7 @@ public class PostActivity extends SherlockFragmentActivity
         	public void onClick( View view )
         	{
         		Intent intent = new Intent( Intent.ACTION_VIEW).setData( 
-        				                    Uri.parse("http://www.sweclockers.com/feeds/news.xml" ) );//displayedPost.getLink() ) );
+        				                    Uri.parse( displayedPost.getLink() ) );
 				startActivity(intent);
         	}
         } );
