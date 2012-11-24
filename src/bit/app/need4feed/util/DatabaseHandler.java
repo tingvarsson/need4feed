@@ -46,6 +46,7 @@ public class DatabaseHandler extends SQLiteOpenHelper
     private static final String KEY_POST_LINK = "post_link";
     private static final String KEY_POST_DESCRIPTION = "post_description";
     private static final String KEY_POST_PUBDATE = "post_pubdate";
+    private static final String KEY_POST_DATETIME = "post_datetime";
     private static final String KEY_POST_THUMBNAIL = "post_thumbnail";
     private static final String KEY_POST_FEED = "post_feed";
     
@@ -81,9 +82,9 @@ public class DatabaseHandler extends SQLiteOpenHelper
 			   "(" + KEY_POST_ID + " INTEGER PRIMARY KEY ASC, " + 
 			   KEY_POST_TITLE + " TEXT, " + KEY_POST_LINK + " TEXT, " + 
 			   KEY_POST_DESCRIPTION + " TEXT, " + KEY_POST_PUBDATE + " TEXT, " + 
-			   KEY_POST_THUMBNAIL + " TEXT, " + KEY_POST_FEED + 
-			   " INTEGER, FOREIGN KEY(" + KEY_POST_FEED +  ") REFERENCES " + 
-			   TABLE_FEEDS + "(" + KEY_FEED_ID + ")" + ")";
+			   KEY_POST_DATETIME + " LONG, " + KEY_POST_THUMBNAIL + " TEXT, " + 
+			   KEY_POST_FEED + " INTEGER, FOREIGN KEY(" + KEY_POST_FEED +  
+			   ") REFERENCES " + TABLE_FEEDS + "(" + KEY_FEED_ID + ")" + ")";
 		
 	    db.execSQL( CREATE_TABLE_POSTS );
 	}
@@ -138,6 +139,7 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	    values.put( KEY_POST_LINK, p.getLink() );
 	    values.put( KEY_POST_DESCRIPTION, p.getDescription() );
 	    values.put( KEY_POST_PUBDATE, p.getPubDate() );
+	    values.put( KEY_POST_DATETIME, p.getDateTime() );
 	    values.put( KEY_POST_THUMBNAIL, p.getThumbnail() );
 	    values.put( KEY_POST_FEED, p.getFeedId() );
 	 
@@ -182,6 +184,7 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	    values.put( KEY_POST_LINK, p.getLink() );
 	    values.put( KEY_POST_DESCRIPTION, p.getDescription() );
 	    values.put( KEY_POST_PUBDATE, p.getPubDate() );
+	    values.put( KEY_POST_DATETIME, p.getDateTime() );
 	    values.put( KEY_POST_THUMBNAIL, p.getThumbnail() );
 	    values.put( KEY_POST_FEED, p.getFeedId() );
 	 
@@ -409,7 +412,8 @@ public class DatabaseHandler extends SQLiteOpenHelper
 		
 		// Select All Query
 	    String selectQuery = "SELECT  * FROM " + TABLE_POSTS + " WHERE " + 
-		                     KEY_POST_FEED + " =?";
+		                     KEY_POST_FEED + " =?" + " ORDER BY " + 
+	    		             KEY_POST_DATETIME + " DESC";
 	 
 	    Cursor cursor = this.db.rawQuery( selectQuery, 
                                           new String[] { Long.toString( feedId ) } );
@@ -420,12 +424,13 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	        do
 	        {
 	        	Post p = new Post( Integer.parseInt( cursor.getString( 0 ) ),
-	    		                   Integer.parseInt( cursor.getString( 6 ) ),
+	    		                   Integer.parseInt( cursor.getString( 7 ) ),
 	                               cursor.getString( 1 ),
 	                               cursor.getString( 2 ),
 	                               cursor.getString( 3 ),
 	                               cursor.getString( 4 ),
-	                               cursor.getString( 5 ) );
+	                               Long.parseLong( cursor.getString( 5 ) ),
+	                               cursor.getString( 6 ) );
 	        	postList.add( p );
 	        } while( cursor.moveToNext() );
 	    }
@@ -442,6 +447,7 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	    		                                              KEY_POST_LINK,
 	    		                                              KEY_POST_DESCRIPTION,
 	    		                                              KEY_POST_PUBDATE,
+	    		                                              KEY_POST_DATETIME,
 	    		                                              KEY_POST_THUMBNAIL,
 	    		                                              KEY_POST_FEED }, 
 	    		                  KEY_POST_ID + "=?",
@@ -454,12 +460,13 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	    }
 	 
 	    Post p = new Post( Integer.parseInt( cursor.getString( 0 ) ),
-	    		           Integer.parseInt( cursor.getString( 6 ) ),
+	    		           Integer.parseInt( cursor.getString( 7 ) ),
 	                       cursor.getString( 1 ),
 	                       cursor.getString( 2 ),
 	                       cursor.getString( 3 ),
 	                       cursor.getString( 4 ),
-	                       cursor.getString( 5 ) );
+	                       Long.parseLong( cursor.getString( 5 ) ),
+	                       cursor.getString( 6 ) );
 		
 	    cursor.close();
 	    

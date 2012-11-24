@@ -54,6 +54,11 @@ public class PostActivity extends SherlockFragmentActivity
         
         displayedPost = databaseHandler.getPost( postId );
         
+        actionBar.setHomeButtonEnabled( true );
+        actionBar.setDisplayHomeAsUpEnabled( true );
+        actionBar.setNavigationMode( ActionBar.NAVIGATION_MODE_LIST );
+        actionBar.setTitle( "Post" );
+        
         // Insert title, feed and content in the view
         titleTextView.setText( displayedPost.getTitle() );
         
@@ -98,11 +103,22 @@ public class PostActivity extends SherlockFragmentActivity
     @Override
     public boolean onOptionsItemSelected( MenuItem item ) 
     {
-        if( item.getItemId() == R.id.menu_settings ) 
-        {
-
-        }
-        
+    	switch( item.getItemId() )
+    	{
+    	case R.id.homeAsUp:
+    		
+    		break;
+    		
+    	case R.id.menu_settings:
+    		
+    		break;
+    	
+		default:
+    			
+			break;
+    			
+    	}
+    	
         return( super.onOptionsItemSelected( item ) );
     }
 }

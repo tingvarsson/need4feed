@@ -1,10 +1,5 @@
 package bit.app.need4feed.type;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 public class Post implements Comparable<Post>
 {
 	protected long id;
@@ -13,12 +8,13 @@ public class Post implements Comparable<Post>
 	protected String link;
 	protected String description;
 	protected String pubDate;
+	protected Long dateTime;
 	protected String thumbnail;
 	
 	public Post() {}
 	
 	public Post( long id, long feedId, String title, String link, 
-			     String description, String pubDate, String thumbnail )
+			     String description, String pubDate, long dateTime, String thumbnail )
 	{
 		this.id = id;
 		this.feedId = feedId;
@@ -26,6 +22,7 @@ public class Post implements Comparable<Post>
 		this.link = link;
 		this.description = description;
 		this.pubDate = pubDate;
+		this.dateTime = dateTime;
 		this.thumbnail = thumbnail;
 	}
 	
@@ -47,25 +44,14 @@ public class Post implements Comparable<Post>
 	public String getPubDate() { return( this.pubDate ); }
 	public void setPubDate( String pubDate ) { this.pubDate = pubDate; }
 	
+	public long getDateTime() { return( this.dateTime ); }
+	public void setDateTime( long dateTime ) { this.dateTime = dateTime; }
+	
 	public String getThumbnail() { return( this.thumbnail ); }
 	public void setThumbnail( String thumbnail ) { this.thumbnail = thumbnail; }
 
 	public int compareTo( Post p ) 
 	{
-		DateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz");
-		
-		try 
-		{
-			Date date = formatter.parse( this.getPubDate() );
-			Date dateOther = formatter.parse( p.getPubDate() );
-			
-			return( date.compareTo( dateOther ) );
-			
-		} catch (ParseException e) {
-			e.printStackTrace();
-			// FIXME: How to properly handle this situation? aka. when we can't parse the date
-			// Should the actual parsing be moved perhaps? to a setPubdate or similar..
-			return( -1 );
-		}
+		return( this.dateTime.compareTo( p.dateTime ) );
 	}
 }

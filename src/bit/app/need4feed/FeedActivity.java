@@ -1,5 +1,6 @@
 package bit.app.need4feed;
 
+import java.util.Collections;
 import java.util.List;
 
 import bit.app.need4feed.type.Post;

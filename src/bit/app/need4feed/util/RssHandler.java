@@ -2,7 +2,11 @@ package bit.app.need4feed.util;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -78,6 +82,24 @@ public class RssHandler extends DefaultHandler
 			( currentPost.getPubDate() == null ) )
 		{
 			currentPost.setPubDate( chars.toString() );
+			
+			// Convert the date string to an actual number to compare with later
+			DateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz");
+			
+			try 
+			{
+				Date date = formatter.parse( currentPost.getPubDate() );
+				
+				currentPost.setDateTime( date.getTime() );
+				
+			} catch( ParseException e ) 
+			{
+				e.printStackTrace();
+				
+				// TODO: Faulty date string
+				currentPost.setDateTime( 0 );
+			}
+			
 			Log.d( "RSS Handler", "PubDate: " + chars.toString() );
 		}
 		
@@ -107,7 +129,7 @@ public class RssHandler extends DefaultHandler
 			// Check if it is a new post or not
 			if( postList.size() > 0 )
 			{
-				if( currentPost.compareTo( postList.get( postList.size() - 1 ) ) <= 0 )
+				if( currentPost.compareTo( postList.get( 0 ) ) <= 0 )
 				{
 					// TODO: Equal dates are now considered a post we don't want
 					// But could be that it is an updated version of that post?? Should we check more?
@@ -209,7 +231,6 @@ public class RssHandler extends DefaultHandler
 		
 		// Fetch the current posts from the database to compare with
 		postList = db.getPosts( currentFeed.getId() );
-		Collections.sort( postList );
 		
 		try 
 		{
