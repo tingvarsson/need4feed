@@ -145,11 +145,13 @@ public class RssHandler extends DefaultHandler
 			db.addPost( currentPost );
 			Log.d( "RSS Handler", "Post added." );
 			
+			// Check the amount of posts and remove the oldest
 			int tooManyPosts = db.getPostCount( currentFeed.getId() ) - POST_LIMIT;
 			
-			if( tooManyPosts > 0 )
+			while( tooManyPosts > 0 )
 			{
-				// TODO: Remove oldest posts!
+				db.deletePost( postList.remove( postList.size() - 1 ).getId() );
+				tooManyPosts--;
 			}
 		}
 	}
