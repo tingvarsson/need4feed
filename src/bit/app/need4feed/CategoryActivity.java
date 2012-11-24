@@ -56,6 +56,7 @@ public class CategoryActivity extends SherlockFragmentActivity
 			{
 				Intent intent = new Intent( CategoryActivity.this, 
 						                    FeedActivity.class );
+				intent.putExtra( MainActivity.CATEGORY_ID, categoryId );
 			    intent.putExtra( FEED_ID, ( (Feed)feedAdapter.getItem( position ) ).getId() );
 			    startActivity( intent );
 			}

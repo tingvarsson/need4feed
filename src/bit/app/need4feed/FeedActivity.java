@@ -1,8 +1,5 @@
 package bit.app.need4feed;
 
-import java.util.Collections;
-import java.util.List;
-
 import bit.app.need4feed.type.Post;
 import bit.app.need4feed.type.PostAdapter;
 import bit.app.need4feed.util.DatabaseHandler;
@@ -27,7 +24,9 @@ public class FeedActivity extends SherlockFragmentActivity
 	ActionBar actionBar;
 	ListView postListView;
 	PostAdapter postAdapter;
-	List<Post> postList;
+	
+	long categoryId;
+	long feedId;
 	
 	DatabaseHandler databaseHandler;
 
@@ -44,10 +43,8 @@ public class FeedActivity extends SherlockFragmentActivity
         
         // Fetch the message containing the feed id
         Intent intent = getIntent();
-        long feedId = intent.getLongExtra( CategoryActivity.FEED_ID, 0 );
-        
-        // Fetch posts for feedId
-        postList = databaseHandler.getPosts( feedId );
+        categoryId = intent.getLongExtra( MainActivity.CATEGORY_ID, 0 );
+        feedId = intent.getLongExtra( CategoryActivity.FEED_ID, 0 );
         
         postListView.setOnItemClickListener( new OnItemClickListener() 
         {
@@ -56,12 +53,15 @@ public class FeedActivity extends SherlockFragmentActivity
 			{
 				Intent intent = new Intent( FeedActivity.this, 
 						                    PostActivity.class );
+				intent.putExtra( MainActivity.CATEGORY_ID, categoryId );
+				intent.putExtra( CategoryActivity.FEED_ID, feedId );
 			    intent.putExtra( POST_ID, ( (Post)postAdapter.getItem( position ) ).getId() );
 			    startActivity( intent );
 			}
 		} );
 			    
-		postAdapter = new PostAdapter( FeedActivity.this, postList );
+		postAdapter = new PostAdapter( FeedActivity.this, 
+				                       databaseHandler.getPosts( feedId ) );
         
         postListView.setAdapter( postAdapter );
     }

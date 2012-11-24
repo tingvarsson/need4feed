@@ -28,6 +28,10 @@ public class PostActivity extends SherlockFragmentActivity
 	TextView feedTextView;
 	WebView contentWebView;
 	
+	long categoryId;
+	long feedId;
+	long postId;
+	
 	Feed sourceFeed;
 	Post displayedPost;
 	
@@ -50,7 +54,9 @@ public class PostActivity extends SherlockFragmentActivity
         
         // Fetch the message containing the feed id
         Intent intent = getIntent();
-        long postId = intent.getLongExtra( FeedActivity.POST_ID, 0 );
+        categoryId = intent.getLongExtra( MainActivity.CATEGORY_ID, 0 );
+        feedId = intent.getLongExtra( CategoryActivity.FEED_ID, 0 );
+        postId = intent.getLongExtra( FeedActivity.POST_ID, 0 );
         
         displayedPost = databaseHandler.getPost( postId );
         
