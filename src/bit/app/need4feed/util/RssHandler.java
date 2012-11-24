@@ -139,6 +139,7 @@ public class RssHandler extends DefaultHandler
 			
 			// Finalize the post
 			currentPost.setFeedId( currentFeed.getId() );
+			currentPost.setRead( false );
 			
 			// Add it to the database
 			db.addPost( currentPost );

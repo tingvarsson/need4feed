@@ -48,6 +48,7 @@ public class DatabaseHandler extends SQLiteOpenHelper
     private static final String KEY_POST_PUBDATE = "post_pubdate";
     private static final String KEY_POST_DATETIME = "post_datetime";
     private static final String KEY_POST_THUMBNAIL = "post_thumbnail";
+    private static final String KEY_POST_READ = "post_read";
     private static final String KEY_POST_FEED = "post_feed";
     
     private SQLiteDatabase db;
@@ -83,7 +84,8 @@ public class DatabaseHandler extends SQLiteOpenHelper
 			   KEY_POST_TITLE + " TEXT, " + KEY_POST_LINK + " TEXT, " + 
 			   KEY_POST_DESCRIPTION + " TEXT, " + KEY_POST_PUBDATE + " TEXT, " + 
 			   KEY_POST_DATETIME + " LONG, " + KEY_POST_THUMBNAIL + " TEXT, " + 
-			   KEY_POST_FEED + " INTEGER, FOREIGN KEY(" + KEY_POST_FEED +  
+			   KEY_POST_READ + " INTEGER, " + KEY_POST_FEED + 
+			   " INTEGER, FOREIGN KEY(" + KEY_POST_FEED +  
 			   ") REFERENCES " + TABLE_FEEDS + "(" + KEY_FEED_ID + ")" + ")";
 		
 	    db.execSQL( CREATE_TABLE_POSTS );
@@ -141,6 +143,7 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	    values.put( KEY_POST_PUBDATE, p.getPubDate() );
 	    values.put( KEY_POST_DATETIME, p.getDateTime() );
 	    values.put( KEY_POST_THUMBNAIL, p.getThumbnail() );
+	    values.put( KEY_POST_READ, p.getRead() ? 1 : 0 );
 	    values.put( KEY_POST_FEED, p.getFeedId() );
 	 
 	    //  Insert the row, returned is the rowid used as feed id
@@ -173,7 +176,7 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	    values.put( KEY_FEED_CATEGORY, f.getCategoryId() );
 	 
 	    // updating row
-	    this.db.update( TABLE_CATEGORIES, values, KEY_FEED_ID + " = ?",
+	    this.db.update( TABLE_FEEDS, values, KEY_FEED_ID + " = ?",
 	               new String[] { String.valueOf( f.getId() ) } );
 	}
 	
@@ -186,10 +189,11 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	    values.put( KEY_POST_PUBDATE, p.getPubDate() );
 	    values.put( KEY_POST_DATETIME, p.getDateTime() );
 	    values.put( KEY_POST_THUMBNAIL, p.getThumbnail() );
+	    values.put( KEY_POST_READ, p.getRead() ? 1 : 0 );
 	    values.put( KEY_POST_FEED, p.getFeedId() );
 	 
 	    // updating row
-	    this.db.update( TABLE_CATEGORIES, values, KEY_POST_ID + " = ?",
+	    this.db.update( TABLE_POSTS, values, KEY_POST_ID + " = ?",
 	               new String[] { String.valueOf( p.getId() ) } );
 	}
 	
@@ -423,14 +427,15 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	    {
 	        do
 	        {
-	        	Post p = new Post( Integer.parseInt( cursor.getString( 0 ) ),
-	    		                   Integer.parseInt( cursor.getString( 7 ) ),
+	        	Post p = new Post( cursor.getInt( 0 ),
+	    		                   cursor.getInt( 8 ),
 	                               cursor.getString( 1 ),
 	                               cursor.getString( 2 ),
 	                               cursor.getString( 3 ),
 	                               cursor.getString( 4 ),
-	                               Long.parseLong( cursor.getString( 5 ) ),
-	                               cursor.getString( 6 ) );
+	                               cursor.getLong( 5 ),
+	                               cursor.getString( 6 ),
+	                               ( cursor.getInt( 7 ) == 1 ) );
 	        	postList.add( p );
 	        } while( cursor.moveToNext() );
 	    }
@@ -449,6 +454,7 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	    		                                              KEY_POST_PUBDATE,
 	    		                                              KEY_POST_DATETIME,
 	    		                                              KEY_POST_THUMBNAIL,
+	    		                                              KEY_POST_READ,
 	    		                                              KEY_POST_FEED }, 
 	    		                  KEY_POST_ID + "=?",
 	                              new String[] { String.valueOf( postId ) }, 
@@ -459,14 +465,15 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	        cursor.moveToFirst();
 	    }
 	 
-	    Post p = new Post( Integer.parseInt( cursor.getString( 0 ) ),
-	    		           Integer.parseInt( cursor.getString( 7 ) ),
-	                       cursor.getString( 1 ),
-	                       cursor.getString( 2 ),
-	                       cursor.getString( 3 ),
-	                       cursor.getString( 4 ),
-	                       Long.parseLong( cursor.getString( 5 ) ),
-	                       cursor.getString( 6 ) );
+	    Post p = new Post( cursor.getInt( 0 ),
+                           cursor.getInt( 8 ),
+                           cursor.getString( 1 ),
+                           cursor.getString( 2 ),
+                           cursor.getString( 3 ),
+                           cursor.getString( 4 ),
+                           cursor.getLong( 5 ),
+                           cursor.getString( 6 ),
+                           ( cursor.getInt( 7 ) == 1 ) );
 		
 	    cursor.close();
 	    
@@ -482,6 +489,41 @@ public class DatabaseHandler extends SQLiteOpenHelper
         
         Cursor cursor = this.db.rawQuery( countQuery, 
         		                          new String[] { Long.toString( feedId ) } );
+        count = cursor.getCount();
+        
+        cursor.close();
+ 
+        // return count
+        return( count );
+	}
+	
+	public int getAllUnreadPostCount()
+	{
+		int count;
+		
+		String countQuery = "SELECT  * FROM " + TABLE_POSTS + " WHERE " + 
+                            KEY_POST_READ + " =?";
+        
+        Cursor cursor = this.db.rawQuery( countQuery, 
+        		                          new String[] { Integer.toString( 0 ) } );
+        count = cursor.getCount();
+        
+        cursor.close();
+ 
+        // return count
+        return( count );
+	}
+	
+	public int getUnreadPostCount( long feedId )
+	{
+		int count;
+		
+		String countQuery = "SELECT  * FROM " + TABLE_POSTS + " WHERE " + 
+                            KEY_POST_FEED + " =? AND " + KEY_POST_READ + " =?";
+        
+        Cursor cursor = this.db.rawQuery( countQuery, 
+        		                          new String[] { Long.toString( feedId ), 
+        		                                         Integer.toString( 0 ) } );
         count = cursor.getCount();
         
         cursor.close();

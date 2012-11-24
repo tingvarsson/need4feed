@@ -6,6 +6,7 @@ import bit.app.need4feed.R;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,6 +72,15 @@ public class PostAdapter extends BaseAdapter
 		}
 
 		holder.label.setText( postList.get( position ).getTitle() );
+		// Mark un-read posts with bold font
+		if( postList.get( position ).getRead() == false )
+		{
+			holder.label.setTypeface( null, Typeface.BOLD );
+		}
+		else
+		{
+			holder.label.setTypeface( null, Typeface.NORMAL );
+		}
 		holder.details.setText( postList.get( position ).getPubDate() );
 
 		return( vi );

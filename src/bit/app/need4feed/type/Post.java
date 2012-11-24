@@ -10,11 +10,13 @@ public class Post implements Comparable<Post>
 	protected String pubDate;
 	protected Long dateTime;
 	protected String thumbnail;
+	protected boolean read;
 	
 	public Post() {}
 	
 	public Post( long id, long feedId, String title, String link, 
-			     String description, String pubDate, long dateTime, String thumbnail )
+			     String description, String pubDate, long dateTime, 
+			     String thumbnail, boolean read )
 	{
 		this.id = id;
 		this.feedId = feedId;
@@ -24,6 +26,7 @@ public class Post implements Comparable<Post>
 		this.pubDate = pubDate;
 		this.dateTime = dateTime;
 		this.thumbnail = thumbnail;
+		this.read = read;
 	}
 	
 	public long getId() { return( this.id ); }
@@ -49,6 +52,9 @@ public class Post implements Comparable<Post>
 	
 	public String getThumbnail() { return( this.thumbnail ); }
 	public void setThumbnail( String thumbnail ) { this.thumbnail = thumbnail; }
+	
+	public boolean getRead() { return( this.read ); }
+	public void setRead( boolean read ) { this.read = read; }
 
 	public int compareTo( Post p ) 
 	{

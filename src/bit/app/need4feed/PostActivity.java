@@ -60,6 +60,10 @@ public class PostActivity extends SherlockFragmentActivity
         
         displayedPost = databaseHandler.getPost( postId );
         
+        // mark the displayed post as read and update back to the database
+        displayedPost.setRead( true );
+        databaseHandler.updatePost( displayedPost );
+        
         actionBar.setHomeButtonEnabled( true );
         actionBar.setDisplayHomeAsUpEnabled( true );
         actionBar.setNavigationMode( ActionBar.NAVIGATION_MODE_LIST );
