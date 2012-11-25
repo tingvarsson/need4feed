@@ -72,7 +72,7 @@ public class RemoveFeedDialog extends DialogFragment
                 // Validate that it is a correct postion
                 if( position >= 0 )
                 {
-	                feedList = databaseHandler.getFeeds( 0 );
+	                feedList = databaseHandler.getFeeds( categoryId );
 	                databaseHandler.deleteFeed( feedList.get( position ).getId() );
 	                removeFeedDialogListener.onFinishRemoveFeedDialog();
                 }
