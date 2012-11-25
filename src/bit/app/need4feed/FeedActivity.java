@@ -22,6 +22,7 @@ import android.widget.AdapterView.OnItemClickListener;
 public class FeedActivity extends SherlockFragmentActivity 
 {
 	public final static String POST_ID = "bit.app.need4feed.POST_ID";
+	public final static int REQUEST_UPDATE = 1;
 	
 	ActionBar actionBar;
 	ListView postListView;
@@ -94,7 +95,7 @@ public class FeedActivity extends SherlockFragmentActivity
 				intent.putExtra( MainActivity.CATEGORY_ID, categoryId );
 				intent.putExtra( CategoryActivity.FEED_ID, feedId );
 			    intent.putExtra( POST_ID, ( (Post)postAdapter.getItem( position ) ).getId() );
-			    startActivity( intent );
+			    startActivityForResult( intent, REQUEST_UPDATE );
 			}
 		} );
 			    
@@ -102,6 +103,18 @@ public class FeedActivity extends SherlockFragmentActivity
 				                       databaseHandler.getPosts( feedId ) );
         
         postListView.setAdapter( postAdapter );
+    }
+    
+    @Override
+    protected void onActivityResult( int requestCode, int resultCode, Intent intent ) 
+    {
+        super.onActivityResult(requestCode, resultCode, intent);
+
+        if( requestCode == REQUEST_UPDATE ) 
+        {
+        	postAdapter.setPostList( databaseHandler.getPosts( feedId ) );
+        	postAdapter.notifyDataSetChanged();
+        }
     }
     
     @Override

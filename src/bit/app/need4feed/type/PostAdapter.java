@@ -29,6 +29,11 @@ public class PostAdapter extends BaseAdapter
 		inflater = (LayoutInflater)activity
 				   .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
+	
+	public void setPostList( List<Post> pList )
+	{
+		postList = pList;
+	}
 
 	public int getCount() 
 	{
