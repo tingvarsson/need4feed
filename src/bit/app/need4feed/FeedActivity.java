@@ -6,6 +6,7 @@ import bit.app.need4feed.util.DatabaseHandler;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
@@ -14,6 +15,7 @@ import android.os.Bundle;
 import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
@@ -45,6 +47,42 @@ public class FeedActivity extends SherlockFragmentActivity
         Intent intent = getIntent();
         categoryId = intent.getLongExtra( MainActivity.CATEGORY_ID, 0 );
         feedId = intent.getLongExtra( CategoryActivity.FEED_ID, 0 );
+        
+        actionBar.setHomeButtonEnabled( true );
+        actionBar.setDisplayHomeAsUpEnabled( true );
+        actionBar.setDisplayShowTitleEnabled( false );
+        actionBar.setNavigationMode( ActionBar.NAVIGATION_MODE_LIST );
+        
+        ArrayAdapter<String> navAdapter = new ArrayAdapter<String>( getBaseContext(), 
+        															R.layout.sherlock_spinner_dropdown_item, 
+        		                                                    new String[] { "Feed", "Category", "Main" } );
+
+		actionBar.setListNavigationCallbacks( navAdapter, new OnNavigationListener() 
+		{
+			public boolean onNavigationItemSelected( int itemPosition, long itemId ) 
+			{
+				Intent intent;
+				switch( itemPosition )
+				{
+				case 0: // Feed
+					// Do nothing, stay put!
+					return( true );
+					
+				case 1: // Category
+					intent = new Intent( FeedActivity.this, CategoryActivity.class );
+					intent.putExtra( MainActivity.CATEGORY_ID, categoryId );
+					startActivity( intent );
+					return( true );
+					
+				case 2: // Main
+					intent = new Intent( FeedActivity.this, MainActivity.class );
+					startActivity( intent );
+					return( true );
+				default:
+					return( false );
+				}
+			}
+		} );
         
         postListView.setOnItemClickListener( new OnItemClickListener() 
         {
@@ -82,10 +120,23 @@ public class FeedActivity extends SherlockFragmentActivity
     @Override
     public boolean onOptionsItemSelected( MenuItem item ) 
     {
-        if( item.getItemId() == R.id.menu_settings ) 
-        {
-
-        }
+    	switch( item.getItemId() )
+    	{
+    	case android.R.id.home:
+    		Intent intent = new Intent( FeedActivity.this, CategoryActivity.class );
+			intent.putExtra( MainActivity.CATEGORY_ID, categoryId );
+			startActivity( intent );
+    		break;
+    		
+    	case R.id.menu_settings:
+    		
+    		break;
+    	
+		default:
+    			
+			break;
+    			
+    	}
         
         return( super.onOptionsItemSelected( item ) );
     }

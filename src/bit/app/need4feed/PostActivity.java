@@ -5,6 +5,7 @@ import bit.app.need4feed.type.Post;
 import bit.app.need4feed.util.DatabaseHandler;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebView;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 public class PostActivity extends SherlockFragmentActivity 
@@ -66,8 +68,46 @@ public class PostActivity extends SherlockFragmentActivity
         
         actionBar.setHomeButtonEnabled( true );
         actionBar.setDisplayHomeAsUpEnabled( true );
+        actionBar.setDisplayShowTitleEnabled( false );
         actionBar.setNavigationMode( ActionBar.NAVIGATION_MODE_LIST );
-        actionBar.setTitle( "Post" );
+        
+        ArrayAdapter<String> navAdapter = new ArrayAdapter<String>( getBaseContext(), 
+        															R.layout.sherlock_spinner_dropdown_item, 
+        		                                                    new String[] { "Post", "Feed", "Category", "Main" } );
+
+		actionBar.setListNavigationCallbacks( navAdapter, new OnNavigationListener() 
+		{
+			public boolean onNavigationItemSelected( int itemPosition, long itemId ) 
+			{
+				Intent intent;
+				switch( itemPosition )
+				{
+				case 0: // Post
+					// Do nothing, stay put!
+					return( true );
+					
+				case 1: // Feed
+					intent = new Intent( PostActivity.this, FeedActivity.class );
+					intent.putExtra( MainActivity.CATEGORY_ID, categoryId );
+					intent.putExtra( CategoryActivity.FEED_ID, feedId );
+					startActivity( intent );
+					return( true );
+					
+				case 2: // Category
+					intent = new Intent( PostActivity.this, CategoryActivity.class );
+					intent.putExtra( MainActivity.CATEGORY_ID, categoryId );
+					startActivity( intent );
+					return( true );
+					
+				case 3: // Main
+					intent = new Intent( PostActivity.this, MainActivity.class );
+					startActivity( intent );
+					return( true );
+				default:
+					return( false );
+				}
+			}
+		} );
         
         // Insert title, feed and content in the view
         titleTextView.setText( displayedPost.getTitle() );
@@ -115,8 +155,11 @@ public class PostActivity extends SherlockFragmentActivity
     {
     	switch( item.getItemId() )
     	{
-    	case R.id.homeAsUp:
-    		
+    	case android.R.id.home:
+    		Intent intent = new Intent( PostActivity.this, FeedActivity.class );
+			intent.putExtra( MainActivity.CATEGORY_ID, categoryId );
+			intent.putExtra( CategoryActivity.FEED_ID, feedId );
+			startActivity( intent );
     		break;
     		
     	case R.id.menu_settings:

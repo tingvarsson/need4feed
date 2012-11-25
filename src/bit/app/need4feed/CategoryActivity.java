@@ -8,6 +8,7 @@ import bit.app.need4feed.util.DatabaseHandler;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
@@ -17,6 +18,7 @@ import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
@@ -48,6 +50,36 @@ public class CategoryActivity extends SherlockFragmentActivity
         // Fetch the message containing the category id
         Intent intent = getIntent();
         categoryId = intent.getLongExtra( MainActivity.CATEGORY_ID, 0 );
+        
+        actionBar.setHomeButtonEnabled( true );
+        actionBar.setDisplayHomeAsUpEnabled( true );
+        actionBar.setDisplayShowTitleEnabled( false );
+        actionBar.setNavigationMode( ActionBar.NAVIGATION_MODE_LIST );
+        
+        ArrayAdapter<String> navAdapter = new ArrayAdapter<String>( getBaseContext(), 
+        															R.layout.sherlock_spinner_dropdown_item, 
+        		                                                    new String[] { "Category", "Main" } );
+
+		actionBar.setListNavigationCallbacks( navAdapter, new OnNavigationListener() 
+		{
+			public boolean onNavigationItemSelected( int itemPosition, long itemId ) 
+			{
+				Intent intent;
+				switch( itemPosition )
+				{
+				case 0: // Category
+					// Do nothing, stay put!
+					return( true );
+					
+				case 1: // Main
+					intent = new Intent( CategoryActivity.this, MainActivity.class );
+					startActivity( intent );
+					return( true );
+				default:
+					return( false );
+				}
+			}
+		} );
         
         feedListView.setOnItemClickListener( new OnItemClickListener() 
         {
@@ -90,6 +122,11 @@ public class CategoryActivity extends SherlockFragmentActivity
     	
     	switch( item.getItemId() )
     	{
+    	case android.R.id.home:
+    		Intent intent = new Intent( CategoryActivity.this, MainActivity.class );
+			startActivity( intent );
+    		break;
+    		
     	case R.id.menu_settings:
     		
     		break;
