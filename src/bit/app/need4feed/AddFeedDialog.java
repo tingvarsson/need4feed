@@ -1,12 +1,12 @@
 package bit.app.need4feed;
 
-import bit.app.need4feed.type.Feed;
 import bit.app.need4feed.util.DatabaseHandler;
 import bit.app.need4feed.util.RssHandler;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.widget.EditText;
@@ -71,28 +71,7 @@ public class AddFeedDialog extends DialogFragment
             	// category id is valid
             	if( ( !inputString.equals( "" ) ) && ( categoryId >= 0 ) )
             	{
-            		RssHandler rssHandler = new RssHandler( databaseHandler );
-	            	Feed newFeed = rssHandler.getFeed( inputString );
-	            	
-	            	if( newFeed == null )
-	            	{
-	            		// Invalid url or invalid rss feed
-	            		
-	            		// TODO: Keep dialog open and notify about faulty url?
-	            	}
-	            	else
-	            	{
-	            		// Valid url and created feed, add category
-	            		newFeed.setCategoryId( categoryId );
-	            		
-	            		// Add feed to the database
-		            	databaseHandler.addFeed( newFeed );
-		            	
-		            	// Fetch latest posts while we're at it and finish
-	            		rssHandler.getLatestPosts( newFeed );
-	            		
-		            	addFeedDialogListener.onFinishAddFeedDialog();
-	            	}
+            		new AddFeedTask().execute( inputString );
             	}
             }
         } );
@@ -103,4 +82,43 @@ public class AddFeedDialog extends DialogFragment
         AlertDialog dialog = dialogBuilder.create();
         return( dialog );
     }
+    
+    private class AddFeedTask extends AsyncTask<String, Integer, Boolean> 
+	{
+		@Override
+		protected void onPreExecute() 
+		{
+			super.onPreExecute();
+		}
+	
+		@Override
+		protected Boolean doInBackground( String... params ) 
+		{
+			String feedLink = params[ 0 ];
+			
+			RssHandler rssHandler = new RssHandler( databaseHandler );
+			
+        	return( rssHandler.getFeed( feedLink, categoryId ) );
+	   }
+	
+	   @Override
+	   protected void onProgressUpdate( Integer... values ) 
+	   {
+	      super.onProgressUpdate( values );
+	   }
+	
+	   @Override
+	   protected void onPostExecute( Boolean success ) 
+	   {
+	      super.onPostExecute( success );
+	      if( success )
+	      {
+	    	  addFeedDialogListener.onFinishAddFeedDialog();
+	      }
+	      else
+	      {
+	    	  // TODO: toast that it failed
+	      }
+	   }
+   }
 }

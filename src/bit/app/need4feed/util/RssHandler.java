@@ -171,10 +171,9 @@ public class RssHandler extends DefaultHandler
 		return( link );
 	}
 	
-	public Feed getFeed( String link ) 
-	{
+	public boolean getFeed( String link, long categoryId ) 
+	{	
 		URL url = null;
-		
 		currentFeed = null;
 		currentPost = new Post();
 
@@ -182,9 +181,11 @@ public class RssHandler extends DefaultHandler
 		
 		if( feedLink == null )
 		{
-			return( null );
+			// no link or a bad link
+			return( false );
 		}
 		
+		// Good link it sems like, try to fetch feed data
 		try 
 		{
 			SAXParserFactory spf = SAXParserFactory.newInstance();
@@ -193,7 +194,7 @@ public class RssHandler extends DefaultHandler
 
 			url = new URL( feedLink );
 
-			xr.setContentHandler( this );
+			xr.setContentHandler( RssHandler.this );
 			Log.d( "RSS Handler", "Fetching: " + feedLink );
 			xr.parse( new InputSource( url.openStream() ) );
 			Log.d( "RSS Handler", "Fetch complete." );
@@ -206,12 +207,21 @@ public class RssHandler extends DefaultHandler
 			Log.e( "RSS Handler Parser Config", e.toString() );
 		}
 		
-		if( currentFeed != null )
+		if( currentFeed == null )
 		{
-			currentFeed.setFeedLink( feedLink );
+			// toast about not finding any rss at that adress
+			return( false );
 		}
 
-		return( currentFeed );
+		// feed created, now finalize it and add it to the database
+		currentFeed.setFeedLink( feedLink );
+		currentFeed.setCategoryId( categoryId );
+		
+		db.addFeed( currentFeed );
+		
+		getLatestPosts( currentFeed );
+		
+		return( true );
 	}
 	
 	public void getAllLatestPosts()
