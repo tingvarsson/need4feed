@@ -480,6 +480,78 @@ public class DatabaseHandler extends SQLiteOpenHelper
 		return( p );
 	}
 	
+	public Post getNewerPost( Post oldPost )
+	{
+	    Cursor cursor = this.db.query( TABLE_POSTS, new String[] { KEY_POST_ID,
+	    													  KEY_POST_TITLE, 
+	    		                                              KEY_POST_LINK,
+	    		                                              KEY_POST_DESCRIPTION,
+	    		                                              KEY_POST_PUBDATE,
+	    		                                              KEY_POST_DATETIME,
+	    		                                              KEY_POST_THUMBNAIL,
+	    		                                              KEY_POST_READ,
+	    		                                              KEY_POST_FEED }, 
+	    		                  KEY_POST_ID + "=? AND " + KEY_POST_DATETIME + ">?",
+	                              new String[] { String.valueOf( oldPost.getId() ),
+	    		                                 String.valueOf( oldPost.getDateTime() ) }, 
+	                              null, null, KEY_POST_DATETIME, null);
+	    
+	    if( cursor != null )
+	    {
+	        cursor.moveToFirst();
+	    }
+	 
+	    Post p = new Post( cursor.getInt( 0 ),
+                           cursor.getInt( 8 ),
+                           cursor.getString( 1 ),
+                           cursor.getString( 2 ),
+                           cursor.getString( 3 ),
+                           cursor.getString( 4 ),
+                           cursor.getLong( 5 ),
+                           cursor.getString( 6 ),
+                           ( cursor.getInt( 7 ) == 1 ) );
+		
+	    cursor.close();
+	    
+		return( p );
+	}
+	
+	public Post getOlderPost( Post oldPost )
+	{
+	    Cursor cursor = this.db.query( TABLE_POSTS, new String[] { KEY_POST_ID,
+	    													  KEY_POST_TITLE, 
+	    		                                              KEY_POST_LINK,
+	    		                                              KEY_POST_DESCRIPTION,
+	    		                                              KEY_POST_PUBDATE,
+	    		                                              KEY_POST_DATETIME,
+	    		                                              KEY_POST_THUMBNAIL,
+	    		                                              KEY_POST_READ,
+	    		                                              KEY_POST_FEED }, 
+	    		                  KEY_POST_ID + "=? AND " + KEY_POST_DATETIME + "<?",
+	                              new String[] { String.valueOf( oldPost.getId() ),
+	    		                                 String.valueOf( oldPost.getDateTime() ) }, 
+	                              null, null, KEY_POST_DATETIME + " DESC", null);
+	    
+	    if( cursor != null )
+	    {
+	        cursor.moveToFirst();
+	    }
+	 
+	    Post p = new Post( cursor.getInt( 0 ),
+                           cursor.getInt( 8 ),
+                           cursor.getString( 1 ),
+                           cursor.getString( 2 ),
+                           cursor.getString( 3 ),
+                           cursor.getString( 4 ),
+                           cursor.getLong( 5 ),
+                           cursor.getString( 6 ),
+                           ( cursor.getInt( 7 ) == 1 ) );
+		
+	    cursor.close();
+	    
+		return( p );
+	}
+	
 	public int getPostCount( long feedId )
 	{
 		int count;
