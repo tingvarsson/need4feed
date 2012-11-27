@@ -12,9 +12,15 @@
         android:showAsAction="ifRoom|withText"
         android:icon="@drawable/ic_action_website" />
     <item
+        android:id="@+id/menu_mark_all_read"
+        android:title="@string/menu_mark_all_read"
+        android:orderInCategory="2"
+        android:showAsAction="ifRoom|withText"
+        android:icon="@drawable/ic_action_accept" />
+    <item
         android:id="@+id/menu_statistics"
         android:title="@string/menu_statistics"
         android:showAsAction="ifRoom|withText"
-        android:orderInCategory="2"
+        android:orderInCategory="3"
         android:icon="@drawable/ic_action_network_cell" />
 </menu>
