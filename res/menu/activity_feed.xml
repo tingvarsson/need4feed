@@ -1,6 +1,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menu_settings"
+    <item 
+        android:id="@+id/menu_settings"
         android:title="@string/menu_settings"
         android:orderInCategory="100"
-        android:showAsAction="never" />
+        android:showAsAction="never"
+        android:icon="@drawable/ic_action_settings" />
+    <item
+        android:id="@+id/menu_find_similar"
+        android:title="@string/menu_find_similar"
+        android:orderInCategory="1"
+        android:showAsAction="ifRoom|withText"
+        android:icon="@drawable/ic_action_website" />
+    <item
+        android:id="@+id/menu_statistics"
+        android:title="@string/menu_statistics"
+        android:showAsAction="ifRoom|withText"
+        android:orderInCategory="2"
+        android:icon="@drawable/ic_action_network_cell" />
 </menu>

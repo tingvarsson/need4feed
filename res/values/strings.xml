@@ -6,6 +6,12 @@
     <string name="menu_add_feed">Add Feed</string>
     <string name="menu_remove_category">Remove Category</string>
     <string name="menu_remove_feed">Remove Feed</string>
+    <string name="menu_import_export_feeds">Import/Export Feeds</string>
+    <string name="menu_statistics">Statistics</string>
+    <string name="menu_find_similar">Find Similar Post</string>
+    <string name="menu_previous_post">Previous Post</string>
+    <string name="menu_next_post">Next Post</string>
+    <string name="menu_share_post">Share Post</string>
     <string name="category_name">Category name</string>
     <string name="title">Title</string>
     <string name="feed">Feed</string>
