@@ -149,6 +149,19 @@ public class FeedActivity extends SherlockFragmentActivity
     		// TODO: Implement
     		break;
     		
+    	case R.id.menu_mark_all_read:
+    		Post tempPost;
+    		
+    		for( int i = 0; i < postAdapter.getCount(); i++ )
+    		{
+    			tempPost = (Post)postAdapter.getItem( i );
+    			tempPost.setRead( true );
+    			databaseHandler.updatePost( tempPost );
+    		}
+    		
+        	postAdapter.notifyDataSetChanged();
+    		break;
+    		
     	case R.id.menu_statistics:
     		// TODO: Implement	
     		break;
