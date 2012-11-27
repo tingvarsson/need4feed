@@ -142,15 +142,21 @@ public class FeedActivity extends SherlockFragmentActivity
     		break;
     		
     	case R.id.menu_settings:
+    		// TODO: Implement
+    		break;
     		
+    	case R.id.menu_find_similar:
+    		// TODO: Implement
+    		break;
+    		
+    	case R.id.menu_statistics:
+    		// TODO: Implement	
     		break;
     	
 		default:
     			
-			break;
-    			
+			break;	
     	}
-        
         return( super.onOptionsItemSelected( item ) );
     }
 }

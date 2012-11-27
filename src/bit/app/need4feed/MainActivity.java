@@ -86,7 +86,7 @@ public class MainActivity extends SherlockFragmentActivity
     	switch( item.getItemId() )
     	{
     	case R.id.menu_settings:
-    		
+    		// TODO: Implement
     		break;
     		
     	case R.id.menu_add_category:
@@ -98,6 +98,18 @@ public class MainActivity extends SherlockFragmentActivity
             RemoveCategoryDialog removeCategoryDialog = new RemoveCategoryDialog();
             removeCategoryDialog.show( fm, "fragment_remove_category" );
     		break;
+    		
+    	case R.id.menu_import_export_feeds:
+    		// TODO: Implement
+    		break;
+    		
+    	case R.id.menu_statistics:
+    		// TODO: Implement
+    		break;
+    		
+		default:
+			
+			break;
     	}
         return( super.onOptionsItemSelected( item ) );
     }

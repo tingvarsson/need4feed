@@ -128,7 +128,7 @@ public class CategoryActivity extends SherlockFragmentActivity
     		break;
     		
     	case R.id.menu_settings:
-    		
+    		// TODO: Implement
     		break;
     		
     	case R.id.menu_add_feed:
@@ -142,6 +142,14 @@ public class CategoryActivity extends SherlockFragmentActivity
             removeFeedDialog.setArguments( args );
             removeFeedDialog.show( fm, "fragment_remove_feed" );
     		break;
+    		
+    	case R.id.menu_statistics:
+    		// TODO: Implement
+    		break;
+    		
+		default:
+			
+			break;
     	}
         return( super.onOptionsItemSelected( item ) );
     }

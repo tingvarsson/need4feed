@@ -161,25 +161,45 @@ public class PostActivity extends SherlockFragmentActivity
     @Override
     public boolean onOptionsItemSelected( MenuItem item ) 
     {
+    	Intent intent;
+    	
     	switch( item.getItemId() )
     	{
     	case android.R.id.home:
-    		Intent intent = new Intent( PostActivity.this, FeedActivity.class );
+    		intent = new Intent( PostActivity.this, FeedActivity.class );
 			intent.putExtra( MainActivity.CATEGORY_ID, categoryId );
 			intent.putExtra( CategoryActivity.FEED_ID, feedId );
 			startActivity( intent );
     		break;
     		
     	case R.id.menu_settings:
+    		// TODO: Implement
+    		break;
     		
+    	case R.id.menu_previous_post:
+    		intent = new Intent( PostActivity.this, PostActivity.class );
+			intent.putExtra( MainActivity.CATEGORY_ID, categoryId );
+			intent.putExtra( CategoryActivity.FEED_ID, feedId );
+			intent.putExtra( FeedActivity.POST_ID, databaseHandler.getNewerPost( displayedPost ).getId() );
+			startActivity( intent );
+    		break;
+    		
+    	case R.id.menu_next_post:
+    		intent = new Intent( PostActivity.this, PostActivity.class );
+			intent.putExtra( MainActivity.CATEGORY_ID, categoryId );
+			intent.putExtra( CategoryActivity.FEED_ID, feedId );
+			intent.putExtra( FeedActivity.POST_ID, databaseHandler.getOlderPost( displayedPost ).getId() );
+			startActivity( intent );
+    		break;
+    		
+    	case R.id.menu_share_post:
+    		// TODO: Implement
     		break;
     	
 		default:
     			
 			break;
-    			
     	}
-    	
         return( super.onOptionsItemSelected( item ) );
     }
 }
