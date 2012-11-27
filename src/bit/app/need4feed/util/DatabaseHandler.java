@@ -491,8 +491,8 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	    		                                              KEY_POST_THUMBNAIL,
 	    		                                              KEY_POST_READ,
 	    		                                              KEY_POST_FEED }, 
-	    		                  KEY_POST_ID + "=? AND " + KEY_POST_DATETIME + ">?",
-	                              new String[] { String.valueOf( oldPost.getId() ),
+	    		                  KEY_POST_FEED + "=? AND " + KEY_POST_DATETIME + ">?",
+	                              new String[] { String.valueOf( oldPost.getFeedId() ),
 	    		                                 String.valueOf( oldPost.getDateTime() ) }, 
 	                              null, null, KEY_POST_DATETIME, null);
 	    
@@ -527,8 +527,8 @@ public class DatabaseHandler extends SQLiteOpenHelper
 	    		                                              KEY_POST_THUMBNAIL,
 	    		                                              KEY_POST_READ,
 	    		                                              KEY_POST_FEED }, 
-	    		                  KEY_POST_ID + "=? AND " + KEY_POST_DATETIME + "<?",
-	                              new String[] { String.valueOf( oldPost.getId() ),
+	    		                  KEY_POST_FEED + "=? AND " + KEY_POST_DATETIME + "<?",
+	                              new String[] { String.valueOf( oldPost.getFeedId() ),
 	    		                                 String.valueOf( oldPost.getDateTime() ) }, 
 	                              null, null, KEY_POST_DATETIME + " DESC", null);
 	    
@@ -569,23 +569,6 @@ public class DatabaseHandler extends SQLiteOpenHelper
         return( count );
 	}
 	
-	public int getAllUnreadPostCount()
-	{
-		int count;
-		
-		String countQuery = "SELECT  * FROM " + TABLE_POSTS + " WHERE " + 
-                            KEY_POST_READ + " =?";
-        
-        Cursor cursor = this.db.rawQuery( countQuery, 
-        		                          new String[] { Integer.toString( 0 ) } );
-        count = cursor.getCount();
-        
-        cursor.close();
- 
-        // return count
-        return( count );
-	}
-	
 	public int getUnreadPostCount( long feedId )
 	{
 		int count;
@@ -596,6 +579,23 @@ public class DatabaseHandler extends SQLiteOpenHelper
         Cursor cursor = this.db.rawQuery( countQuery, 
         		                          new String[] { Long.toString( feedId ), 
         		                                         Integer.toString( 0 ) } );
+        count = cursor.getCount();
+        
+        cursor.close();
+ 
+        // return count
+        return( count );
+	}
+	
+	public int getAllUnreadPostCount()
+	{
+		int count;
+		
+		String countQuery = "SELECT  * FROM " + TABLE_POSTS + " WHERE " + 
+                            KEY_POST_READ + " =?";
+        
+        Cursor cursor = this.db.rawQuery( countQuery, 
+        		                          new String[] { Integer.toString( 0 ) } );
         count = cursor.getCount();
         
         cursor.close();
