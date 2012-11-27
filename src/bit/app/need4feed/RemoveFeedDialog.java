@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.widget.Toast;
 
 public class RemoveFeedDialog extends DialogFragment 
 {
@@ -75,6 +76,16 @@ public class RemoveFeedDialog extends DialogFragment
 	                feedList = databaseHandler.getFeeds( categoryId );
 	                databaseHandler.deleteFeed( feedList.get( position ).getId() );
 	                removeFeedDialogListener.onFinishRemoveFeedDialog();
+	                
+	                Toast.makeText( getActivity().getApplicationContext(), 
+			                        "Feed " + feedList.get( position ).getTitle() + " removed.",
+			                        Toast.LENGTH_SHORT ).show();
+                }
+                else
+                {
+                	Toast.makeText( getActivity().getApplicationContext(), 
+			                        "No feed selected.",
+			                        Toast.LENGTH_SHORT ).show();
                 }
             }
         } );

@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.widget.Toast;
 
 public class RemoveCategoryDialog extends DialogFragment 
 {
@@ -71,6 +72,16 @@ public class RemoveCategoryDialog extends DialogFragment
 	                categoryList = databaseHandler.getCategories();
 	                databaseHandler.deleteCategory( categoryList.get( position ).getId() );
 	                removeCategoryDialogListener.onFinishRemoveCategoryDialog();
+	                
+	                Toast.makeText( getActivity().getApplicationContext(), 
+    				                "Category " + categoryList.get( position ).getName() + " removed.",
+    				                Toast.LENGTH_SHORT ).show();
+                }
+                else
+                {
+                	Toast.makeText( getActivity().getApplicationContext(), 
+    				                "No category selected.",
+    				                Toast.LENGTH_SHORT ).show();
                 }
             }
         } );

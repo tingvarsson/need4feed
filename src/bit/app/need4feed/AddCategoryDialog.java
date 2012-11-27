@@ -9,6 +9,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class AddCategoryDialog extends DialogFragment 
 {
@@ -68,6 +69,16 @@ public class AddCategoryDialog extends DialogFragment
 	            	Category newCategory = new Category( inputString );
 	            	databaseHandler.addCategory( newCategory );
 	            	addCategoryDialogListener.onFinishAddCategoryDialog();
+	            	
+	            	Toast.makeText( getActivity().getApplicationContext(), 
+    				                "Category " + inputString + " added.",
+    				                 Toast.LENGTH_SHORT ).show();
+            	}
+            	else
+            	{
+            		Toast.makeText( getActivity().getApplicationContext(), 
+    				                "Invalid category name.",
+    				                Toast.LENGTH_SHORT ).show();
             	}
             }
         } );

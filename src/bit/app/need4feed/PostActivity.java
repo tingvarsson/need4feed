@@ -20,6 +20,7 @@ import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class PostActivity extends SherlockFragmentActivity 
 {
@@ -62,9 +63,16 @@ public class PostActivity extends SherlockFragmentActivity
         
         displayedPost = databaseHandler.getPost( postId );
         
-        // mark the displayed post as read and update back to the database
-        displayedPost.setRead( true );
-        databaseHandler.updatePost( displayedPost );
+        if( displayedPost.getRead() == false )
+        {
+        	// mark the displayed post as read and update back to the database
+        	displayedPost.setRead( true );
+        	databaseHandler.updatePost( displayedPost );
+        	
+        	Toast.makeText( getApplicationContext(), 
+	                        "Post marked as read.",
+	                        Toast.LENGTH_SHORT ).show();
+        }
         
         actionBar.setHomeButtonEnabled( true );
         actionBar.setDisplayHomeAsUpEnabled( true );

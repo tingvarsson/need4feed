@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class AddFeedDialog extends DialogFragment 
 {
@@ -22,6 +23,8 @@ public class AddFeedDialog extends DialogFragment
     private DatabaseHandler databaseHandler;
     
     private long categoryId;
+    
+    private android.app.Activity activity;
 
 	public AddFeedDialog() 
 	{
@@ -32,6 +35,7 @@ public class AddFeedDialog extends DialogFragment
     public void onAttach( android.app.Activity activity ) 
     {
         super.onAttach( activity );
+        this.activity = activity;
         try
         {
         	addFeedDialogListener = (AddFeedDialogListener)activity;
@@ -114,10 +118,16 @@ public class AddFeedDialog extends DialogFragment
 	      if( success )
 	      {
 	    	  addFeedDialogListener.onFinishAddFeedDialog();
+	    	  
+	    	  Toast.makeText( activity.getApplicationContext(), 
+		                      "Feed added.",
+		                      Toast.LENGTH_SHORT ).show();
 	      }
 	      else
 	      {
-	    	  // TODO: toast that it failed
+	    	  Toast.makeText( activity.getApplicationContext(), 
+		                      "Failed to add feed.",
+		                      Toast.LENGTH_SHORT ).show();
 	      }
 	   }
    }
