@@ -33,6 +33,8 @@ public class RssHandler extends DefaultHandler
 	private Post currentPost;
 	
 	private List<Post> postList;
+	
+	private boolean newPosts;
 
 	//Current characters being accumulated
 	StringBuffer chars = new StringBuffer();
@@ -137,6 +139,8 @@ public class RssHandler extends DefaultHandler
 				}
 			}
 			
+			newPosts = true;
+			
 			// Finalize the post
 			currentPost.setFeedId( currentFeed.getId() );
 			currentPost.setRead( false );
@@ -224,22 +228,29 @@ public class RssHandler extends DefaultHandler
 		return( true );
 	}
 	
-	public void getAllLatestPosts()
+	public boolean getAllLatestPosts()
 	{
+		boolean newPosts = false;
 		List<Feed> feedList = db.getAllFeeds();
 		
 		for( Feed f: feedList )
 		{
-			getLatestPosts( f );
+			if( getLatestPosts( f ) )
+			{
+				newPosts = true;
+			}
 		}
+		
+		return( newPosts );
 	}
 	
-	public void getLatestPosts( Feed feed )
+	public boolean getLatestPosts( Feed feed )
 	{
 		URL url = null;
 		
 		currentFeed = feed;
 		currentPost = new Post();
+		newPosts = false;
 		
 		// Fetch the current posts from the database to compare with
 		postList = db.getPosts( currentFeed.getId() );
@@ -264,5 +275,7 @@ public class RssHandler extends DefaultHandler
 		} catch ( ParserConfigurationException e ) {
 			Log.e( "RSS Handler Parser Config", e.toString() );
 		}
+		
+		return( newPosts );
 	}
 }
