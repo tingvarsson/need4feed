@@ -52,7 +52,7 @@ public class RemoveFeedDialog extends DialogFragment
     {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder( getActivity() );
  
-        dialogBuilder.setTitle("Remove Category");
+        dialogBuilder.setTitle("Remove Feed");
         
         categoryId = getArguments().getLong( "categoryId", -1 );
         
