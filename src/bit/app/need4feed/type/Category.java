@@ -6,8 +6,10 @@ public class Category implements Comparable<Category>
 	private long id;
 	private String name;
 	
-	public Category( String name ) { this.name = name; }
+	public Category() {}
 	
+	public Category( String name ) { this.name = name; }
+
 	public long getId() { return( this.id ); }
 	public void setId( long id ) { this.id = id; }
 	
