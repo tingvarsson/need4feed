@@ -1,0 +1,34 @@
+\section{Other Non-functional Requirements}
+
+
+%\subsection{Performance Requirements}
+%Performance Requirements text here. Response times/refresh rate, Processing times
+
+
+\subsection{Security Requirements}
+For the product to work properly it will require permission from the user for certain features according to Android\cite{android-perm}.\\ \\
+Android user permissions required:
+\begin{itemize}
+  \item Full Internet Access - To access and download RSS feeds.
+\end{itemize}
+Android user permissions that depends on optional features:
+\begin{itemize}
+  \item Modify/Delete SD Card Content - Enables storage of settings, feed list and posts on SD card.
+  \item Modify Global System Settings - Enables the use of notifications.
+\end{itemize}
+
+
+\subsection{Software Quality Attributes}
+In this subsection are software quality requirements that are non-functional listed.
+\begin{description}
+  \item[Availability] \hfill \\
+The product shall be available at all time, even without Internet access.
+  \item[Flexibility] \hfill \\
+Functionality should be possible to add without affecting the current functionality.
+  \item[Reliability] \hfill \\
+The product should not lose performance due to too much content in either the amount of feeds, posts or the content within one post.
+  \item[Scalability] \hfill \\
+The product shall be able to store and handle feeds and posts in such a way that only the actual storage size in memory restricts. The product should be able to handle throughput from unlimited amounts of feeds without preventing the user accessing already downloaded posts.
+  \item[Usability] \hfill \\
+The user shall without reading a manual be able to add, remove, categorize feeds. Beyond that the user shall also be able to, again without reading a manual, view all feeds, view feeds of a certain category, view posts of a certain feed and view individual posts.
+\end{description}

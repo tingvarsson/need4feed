@@ -1,0 +1,62 @@
+\section{System Interface}
+
+
+\subsection{User Interfaces}
+The product shall provide a set of views enabling the user to all system features. 
+
+\subsubsection{Main View}
+The product shall be able to list all categories in alphabetic order, clicking on a category shall take the user to the \textit{Feeds View} for that specific category. The view shall include the following options:
+
+\begin{itemize}
+  \item Add category
+  \item Remove category
+  \item Add feed
+  \item Fetch posts
+\end{itemize}
+The first entry in the list should be a \textit{View all\ldots} button that should show the latest posts from all feeds in all categories. The last entry in the list should be a \textit{Add Category\ldots} button.
+
+
+\subsubsection{Category View}
+The product shall be able to list all feeds for a specific category in alphabetic order, clicking on a feed shall take the user to the \textit{Posts View} for that specific feed. The view shall include the following options:
+
+\begin{itemize}
+  \item Add feed
+  \item Remove feed
+  \item Remove active category
+  \item Fetch posts
+\end{itemize}
+The first entry in the list should be a \textit{View All\ldots} button that should show the latest posts from all feeds in the specific category. The last entry in the list should be a \textit{Add Feed\ldots} button.
+
+
+\subsubsection{Feed View}
+The product shall be able to list the latest posts for a specific feed in a latest first order. Clicking on a post shall take the user to the \textit{Post View} for that specific post. The posts shall be displayed with their heading. The view shall include the following options:
+
+\begin{itemize}
+  \item Mark all posts as read/unread
+  \item Remove active feed
+  \item Fetch posts
+\end{itemize}
+The last entry in the list should be a \textit{Older Posts\ldots} button that should fetch older posts to show.
+
+
+\subsubsection{Post View}
+The product shall be able to display a specific post and all of its content. The view should enable sliding; sliding the screen to the right should show a older post, while sliding to the left should show a newer post. 
+
+
+\subsection{Software Interfaces}
+
+
+\subsubsection{Internet}
+The product shall require access to Internet so that RSS feeds can be accessed and posts be downloaded. RSS feeds shall be accessed through either HTTP or FTP.
+
+
+\subsubsection{External Memory}
+The product should be able to store settings, feed lists and posts on an external memory. It should be able to both store and remove files. 
+
+
+\subsubsection{Background Task}
+The product should periodically update; download new posts and delete old ones. If the product's main interface is active it shall make sure that an opened post is not deleted.
+
+
+\subsubsection{Notification Bar}
+The product should be able to notify the user that there are new posts through the notification bar. It should also show the amount of un-read posts.

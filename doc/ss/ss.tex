@@ -1,0 +1,93 @@
+\documentclass[]{article}
+
+
+% included packages
+% used to include images
+\usepackage{graphicx}
+% used to add caption to figures, tables, etc.
+\usepackage{caption}
+% used to add captions to subfigures
+\usepackage{subcaption}
+% make tables span over more than one page
+\usepackage{longtable}
+% to avoid the use of static table widths
+\usepackage{tabularx}
+% add hyperlinks in the texts
+\usepackage{hyperref}
+
+% correct bad hyphenation here
+\hyphenation{}
+
+% remove heading of bibliography as it is located in a subsection with text
+\makeatletter
+\renewenvironment{thebibliography}[1]{%
+%     \section*{\refname}%
+%      \@mkboth{\MakeUppercase\refname}{\MakeUppercase\refname}%
+      \list{\@biblabel{\@arabic\c@enumiv}}%
+           {\settowidth\labelwidth{\@biblabel{#1}}%
+            \leftmargin\labelwidth
+            \advance\leftmargin\labelsep
+            \@openbib@code
+            \usecounter{enumiv}%
+            \let\p@enumiv\@empty
+            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+      \sloppy
+      \clubpenalty4000
+      \@clubpenalty \clubpenalty
+      \widowpenalty4000%
+      \sfcode`\.\@m}
+     {\def\@noitemerr
+       {\@latex@warning{Empty `thebibliography' environment}}%
+      \endlist}
+\makeatother
+
+
+\begin{document}
+
+% paper title
+% can use linebreaks \\ within to get better formatting as desired
+\title{Need4Feed: \\
+Software Specification\\
+by BIT}
+
+
+% author names and affiliations
+% use a multiple column layout for up to three different
+% affiliations
+\author{Brian Pohl\\
+Student ID: 9100920124\\
+\texttt{enzothebaker8@gmail.com}
+\and
+Iker Trun\\
+Student ID: 9101920127\\
+\texttt{iktrun@gmail.com}
+\and
+Thomas Ingvarsson\\
+Student ID: 9093920122\\
+\texttt{ingvarsson.thomas@sillys.se}
+}
+
+
+% make the title area
+\maketitle
+
+
+\include{revision}
+
+
+\setcounter{tocdepth}{2}
+\tableofcontents
+
+
+\include{introduction}
+
+
+\include{development_environment}
+
+
+\include{specification}
+
+
+
+% that's all folks
+\end{document}

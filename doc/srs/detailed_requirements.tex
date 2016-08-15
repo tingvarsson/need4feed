@@ -1,0 +1,75 @@
+\section{Detailed Requirements}
+\label{sec:detailed_requirements}
+In table~\ref{tab:detailed_requirements} all the requirements are listed with an ID, short description and priority. The different ID categories are:
+\begin{description}
+  \item[P] Post
+  \item[F] Feed
+  \item[U] User Interface
+  \item[I] Interface
+  \item[S] Security
+  \item[Q] Quality
+\end{description}
+
+\begin{center}
+\begin{longtable}{ | l | p{8cm} | l | }
+\caption{List of Detailed Requirements}
+\label{tab:detailed_requirements} \\
+
+\hline \multicolumn{1}{|c|}{\textbf{ID}} & \multicolumn{1}{c|}{\textbf{Description}} & \multicolumn{1}{c|}{\textbf{Priority}}  \\ \hline 
+\endfirsthead
+
+\multicolumn{3}{c}%
+{{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
+\hline \multicolumn{1}{|c|}{\textbf{ID}} & \multicolumn{1}{c|}{\textbf{Description}} & \multicolumn{1}{c|}{\textbf{Priority}} \\ \hline 
+\endhead
+
+\hline \multicolumn{3}{|r|}{{Continued on next page}} \\ \hline
+\endfoot
+
+\hline
+\endlastfoot
+
+    P-1 & Check for new Post(s) & High Priority \\ \hline
+    P-2 & Store Post(s) & High Priority \\ \hline
+    P-3 & Remove Old Post(s) & High Priority \\ \hline
+    P-4 & Access Stored Post(s) & High Priority \\ \hline
+    P-5 & Mark Post as Read & Medium Priority \\ \hline
+    P-6 & Count Un-read Post(s) & Medium Priority \\ \hline
+    P-7 & Share Post & Low Priority \\ \hline
+     &  &  \\ \hline
+    F-1 & Add Feed & High Priority \\ \hline
+    F-2 & Remove Feed & High Priority \\ \hline
+    F-3 & Rename Feed & High Priority \\ \hline
+    F-4 & Categorize Feed & High Priority \\ \hline
+    F-5 & Verify Feed & High Priority \\ \hline
+    F-6 & Store Feed(s) & High Priority \\ \hline
+    F-7 & Access Stored Feed(s) & High Priority \\ \hline
+    F-8 & Export Feed(s) & Low Priority \\ \hline
+    F-9 & Import Feed(s) & Low Priority \\ \hline
+    F-10 & Find Similar Feed(s) & Low Priority \\ \hline
+     &  &  \\ \hline
+    U-1 & Present the Amount of Un-read Post(s) & Medium Priority \\ \hline
+    U-2 & Present a List of Post(s) & High Priority \\ \hline
+    U-3 & Present a Single Post with Header and Content & High Priority \\ \hline
+    U-4 & Present a List of Feed(s) & High Priority \\ \hline
+    U-5 & Present a List of Categories & Medium Priority \\ \hline
+     &  &  \\ \hline
+    I-1 & Internet Access to Fetch Post(s) & High Priority \\ \hline
+    I-2 & External Memory Access to Store/Access Feeds and Posts & High Priority \\ \hline
+    I-3 & Periodical Background Tasks to Fetch Latest Posts. & Medium Priority \\ \hline
+    I-4 & Notification Bar Access to Notify on New Posts and Amount of Un-read Posts & Low Priority \\ \hline
+     &  &  \\ \hline
+    S-1 & Android User Permission: Full Internet Access & High Priority \\ \hline
+    S-2 & Android User Permission: Modify/Delete SD Card Content & High Priority \\ \hline
+    S-3 & Android User Permission: Modify Global System Settings & Low Priority \\ \hline
+     &  &  \\ \hline
+    Q-1 & The product shall be available without Internet Access & High Priority \\ \hline
+    Q-2 & The product should be possible to be extended with more functionality without breaking the existing. & Medium Priority \\ \hline
+    Q-3 & The amount of feeds, posts or post content to display shall not affect the performance to drop & High Priority \\ \hline
+    Q-4 & The amount of feeds/posts to manage shall only be restricted by storage space & Medium Priority \\ \hline
+    Q-5 & Accessing feeds to fetch posts shall not affect the user from accessing locally stored posts & High Priority \\ \hline
+    Q-6 & The user shall be able to manage feeds without using a manual. & High Priority \\ \hline
+    Q-7 & The user shall be able to navigate through categories, feeds and posts without using a manual. & High Priority \\ \hline
+ \hline
+\end{longtable}
+\end{center}

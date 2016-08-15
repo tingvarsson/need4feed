@@ -1,0 +1,92 @@
+\section{Introduction}
+
+
+\subsection{Purpose}
+The purpose of this document is to specify a software for Android users enabling the functionality to gather, organize and read feeds, regardless of if it is a RSS\cite{rss-spec}, ATOM\cite{atom}, Podcasts or social medium feed. Furthermore, this requirement specification will act as base for the specification which in turn will be the base of the design document. This will be the first release of the mentioned software which is completely standalone in the sense that it is not part of a larger system.
+
+
+\subsection{Intended Audience and Reading Suggestions}
+The intended audience for this document are those with an engineering background interested in this project, whether it be the actual teacher assigning this project to the project group, one of the group members or an actual user wanting to know more about the product or continue development. Due to the small size of the actual product I would recommend all readers to read the whole document from start to finish. However to understand the major features, section~\ref{sec:overall_description} will do. If one is only interested in the actual requirements they are listed in section~\ref{sec:detailed_requirements}, Detailed Requirements. A section in which all requirements are listed with their ID, short description, priority and source.
+
+
+\subsection{Project Scope}
+Nowadays the most common form of communication between people all over the world is taking place on the Internet, or specifically through media such as social networks, forums, and blogs. Blogging has become more and more popular during over the last ten years. The blog is an information sharing tool that allows the user to write about anything that is interesting for him or her and potentially for others with common interests. Through low-maintenance web-based solutions there is also almost no technical knowledge required, compared to more complex web pages, for a user to start and maintain a blog. On the other side taking in information has become just as easy. In today's society everybody has a smartphone with an Internet connection, keeping them online at all time. Users are able to be online on social networks, read forums or follow blogs whenever they like to. The idea of joining the wide assortment of topics a user might find interesting, in a more convenient, more easily consumable form has become attractive for users that would like to have all this information organized in one single location, such as in an application on their smartphones.
+
+The development team for this software project has set out to minimize the clutter that comes along with following many different sources, while simultaneously being able to organize the material in great depth. The goal of the program is to minimize time spent ineffectively trying to manage multiple sources and maximize the content available for the user.
+
+Today there exist several similar solutions; web-based such as \textit{Google Reader}\cite{g-reader}, desktop clients such as \textit{Reeder}\cite{reeder} and smartphone applications such as \textit{Feedly}\cite{feedly}. What this software will offer to its users compared to the already existing solutions is a minimalistic interface with low overhead but still capable of giving the full-fledged feed experience, without relying on a web-based service such as \textit{Google Reader}. An experience including adding your favorite feeds, categorizing them and keeping track of the latest posts. By including the possibility to follow social mediums, such as \textit{Facebook} or \textit{Twitter}, along side your regular feeds the product distinguishes from its competition. 
+\begin{table}
+\begin{center}
+\begin{tabularx}{1.05\linewidth}{X*{6}{c}}
+Feature & Feedly & FeedR & Pulse News & gReader & Need4Feed \\
+\hline \\
+Supports \textit{RSS}, \textit{ATOM}, and \textit{Podcast} & \tick & \tick & \tick & \tick & \tick\\
+Supports \textit{Facebook} and \textit{Twitter} & & & \tick & & \tick\\
+Supports \textit{Youtube} and \textit{Tumblr} & \tick & & \tick & & \\
+Supports \textit{Digg}, \textit{Flickr}, \textit{PicPlz}, \textit{Reddit}, and \textit{Vimeo} & & & \tick & & \\
+Categorize Feeds & \tick & \tick & \tick & \tick & \tick \\
+Store Locally & \tick & \tick & \tick & \tick & \tick \\
+Share to Social Networks & \tick & \tick & \tick & \tick & \tick \\
+Integrate with Google Reader & \tick & \tick & \tick & \tick & \\
+Require Account & \tick & \tick & \tick & \tick & \\
+Suggest Feeds & \tick & & \tick & & \tick \\
+Multi-Language & \tick & & \tick & & \\
+Personalize with Themes & \tick & \tick & \tick & \tick & \\
+Open-source & & & & & \tick \\
+\end{tabularx}
+\caption{Supported Features of The Most Popular RSS Readers}\label{tab:support_list}
+\end{center}
+\end{table}
+
+Seen in table~\ref{tab:support_list} are the four most popular \textit{RSS} Readers listed along side with this product. Compared are the main features of each product to visualize where this product succeeds compared to its competition. First thing that can be noticed in the table is that all readers have the same standard support of sources while \textit{Pulse News} plays in its own division with a massive list of supported sources. Here does the product land in the middle, supporting the most popular sources without bloating with less used or popular sources the way one could discuss that \textit{Pulse News} does. Beyond that one can also observe that the product requires no integration with \textit{Google Reader} as mentioned earlier, actually no account all is required to use the product removing any ties otherwise created using one of the more popular choices. The last but not least difference, one could even consider it being the most important one, is that the product is open-source, something the more popular choices are not.
+
+The user of the suggested solution is anyone with a smartphone wanting to organize and follow their favorite feeds through a software that is convenient and approachable. The user should be able to go to the software whenever they have downtime or the need of the latest information.
+
+
+\subsection{Project Constraints}
+The most pressing constraint of the project is that it must be completed within a strict time frame where there are deadlines for multiple milestones. These milestones are:
+\begin{description}
+  \item[9th October] Requirement Analysis: Software Requirements Specification
+  \item[23rd October] Specification: Structured system/Object-oriented analysis
+  \item[22th November] Design/Implementation: Architecture design and Source code/Testing
+  \item[7th December] Demo: Presentation/Installation guide
+\end{description}
+Another constraint is the limited development team, consisting only of the project group of three people. 
+
+
+\subsection{Definitions, acronyms and abbreviations}
+Below is a list of definitions, acronyms and abbreviations referenced in this document, sorted after appearance.
+
+\begin{description}
+  \item[Android] \hfill \\
+  A mobile operating system developed by Google
+  \item[RSS] \hfill \\
+  \textbf{R}ich \textbf{S}ite \textbf{S}ummary
+  \item[ATOM] \hfill \\
+  The Atom Syndication Format is an XML language used for web feeds
+  \item[Podcast] \hfill \\
+  A multimedia digital file made available on the Internet for downloading
+  \item[Google Reader] \hfill \\
+  Google Reader is a Web-based aggregator, capable of reading Atom and RSS feeds online or offline
+  \item[Reeder] \hfill \\
+  A Google Reader client for Mac
+  \item[Feedly] \hfill \\
+  A Google Reader client for Chrome, iOS, Android and Kindle
+  \item[Facebook] \hfill \\
+  A social networking website launched in February 2004
+  \item[Twitter] \hfill \\
+  An online social networking service and microblogging service
+  \item[TBD] \hfill \\
+  \textbf{T}o \textbf{B}e \textbf{D}eclared
+  \item[Froyo] \hfill \\
+  Version 2.2 of the Android operating system
+  \item[Ice Cream Sandwich] \hfill \\
+  Version 4.1 of the Android operating system
+\end{description}
+
+
+\subsection{References}
+In this section is a list of all documents referenced throughout the rest of this document.
+
+\bibliography{ref}
+\bibliographystyle{unsrt}

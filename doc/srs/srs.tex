@@ -1,0 +1,112 @@
+\documentclass[]{article}
+
+
+% included packages
+% used to include images
+\usepackage{graphicx}
+% used to add caption to figures, tables, etc.
+\usepackage{caption}
+% used to add captions to subfigures
+\usepackage{subcaption}
+% make tables span over more than one page
+\usepackage{longtable}
+% to avoid the use of static table widths
+\usepackage{tabularx}
+% add hyperlinks in the texts
+\usepackage{hyperref}
+% add tick an cross
+\usepackage{pifont}
+
+% Create simple commands to create ticks and crosses
+\newcommand{\tick}{\ding{51}}
+\newcommand{\cross}{\ding{55}}
+
+% correct bad hyphenation here
+\hyphenation{}
+
+% remove heading of bibliography as it is located in a subsection with text
+\makeatletter
+\renewenvironment{thebibliography}[1]{%
+%     \section*{\refname}%
+%      \@mkboth{\MakeUppercase\refname}{\MakeUppercase\refname}%
+      \list{\@biblabel{\@arabic\c@enumiv}}%
+           {\settowidth\labelwidth{\@biblabel{#1}}%
+            \leftmargin\labelwidth
+            \advance\leftmargin\labelsep
+            \@openbib@code
+            \usecounter{enumiv}%
+            \let\p@enumiv\@empty
+            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+      \sloppy
+      \clubpenalty4000
+      \@clubpenalty \clubpenalty
+      \widowpenalty4000%
+      \sfcode`\.\@m}
+     {\def\@noitemerr
+       {\@latex@warning{Empty `thebibliography' environment}}%
+      \endlist}
+\makeatother
+
+
+\begin{document}
+
+% paper title
+% can use linebreaks \\ within to get better formatting as desired
+\title{Need4Feed: \\
+Software Requirement Specification\\
+by BIT}
+
+
+% author names and affiliations
+% use a multiple column layout for up to three different
+% affiliations
+\author{Brian Pohl\\
+Student ID: 9100920124\\
+\texttt{enzothebaker8@gmail.com}
+\and
+Iker Trun\\
+Student ID: 9101920127\\
+\texttt{iktrun@gmail.com}
+\and
+Thomas Ingvarsson\\
+Student ID: 9093920122\\
+\texttt{ingvarsson.thomas@sillys.se}
+}
+
+
+% make the title area
+\maketitle
+
+
+\begin{abstract}
+Nowadays the most common form of communication between people all over the world is taking place on the Internet, or specifically through media such as social networks, forums, and blogs. Blogging has become more and more popular during over the last ten years. The blog is an information sharing tool that allows the user to write about anything that is interesting for him or her and potentially for others with common interests. Through low-maintenance web-based solutions there is also almost no technical knowledge required, compared to more complex web pages, for a user to start and maintain a blog. On the other side taking in information has become just as easy. In today's society everybody has a smartphone with an Internet connection, keeping them online at all time. Users are able to be online on social networks, read forums or follow blogs whenever they like to. The idea of joining the wide assortment of topics a user might find interesting, in a more convenient, more easily consumable form has become attractive for users that would like to have all this information organized in one single location, such as in an application on their smartphones.
+\end{abstract}
+
+
+\include{revision}
+
+
+\setcounter{tocdepth}{2}
+\tableofcontents
+
+
+\include{introduction}
+
+
+\include{overall_description}
+
+
+\include{system_features}
+
+
+\include{system_interface}
+
+
+\include{other_nonfunctional_requirements}
+
+
+\include{detailed_requirements}
+
+
+% that's all folks
+\end{document}

@@ -1,0 +1,129 @@
+\section{System Features}
+In this section are the major features mentioned in section~\ref{sec:product_features} described, sub-features are handled within each parent feature. 
+
+\subsection{Share Post}
+The product shall be able to share a post and its content over a social medium. This feature is an optional feature for the product and has low priority.
+
+
+\subsubsection{Stimulus/Response Sequences}
+User triggered:
+\begin{itemize}
+  \item Share Post - Compile a post containing the post's address and a user comment and send to a social medium.
+\end{itemize}
+System triggered:
+\begin{itemize}
+  \item Access Stored Post(s) - Access the address of a locally stored post.
+\end{itemize}
+
+
+\subsection{Count Un-read Post(s)}
+The product shall be able to present the amount of un-read posts stored locally. This feature is an optional feature for the product and has medium priority.
+
+
+\subsubsection{Stimulus/Response Sequences}
+User triggered:
+\begin{itemize}
+  \item Count Un-read Post(s) - The amount of un-read post(s) should be presented to the user in the appropriate view.
+\end{itemize}
+System triggered:
+\begin{itemize}
+  \item Access Stored Post(s) - Access and check the read status of all locally stored post(s).
+\end{itemize}
+
+
+\subsection{Read Post(s)}
+The product shall give the user the ability to Read either several posts, by their headers, or a single post with all of its content. To make sure that the user has the latest posts available the product shall check for new posts, and if any store them locally. To preserve memory shall the product only store a certain amount of posts per feed, once this limit has been reached the product shall remove the oldest posts. The posts presented to the user shall be stored locally and when read they should be marked as read. This feature, along with its sub-features, are key features for the product and have high priority.
+
+
+\subsubsection{Stimulus/Response Sequences}
+User triggered:
+\begin{itemize}
+  \item Read posts - List several posts in an appropriate view where the header of several posts can be read at the same time.
+  \item Read post - Display a post, both the header and the content , in an appropriate view.
+\end{itemize}
+System triggered:
+\begin{itemize}
+  \item Check for New Post(s) - Fetch all the latest posts on start-up or when a new feed has been added.
+  \item Access Stored Feed(s) - To determine where the posts should be fetched from the feed(s) has to be loaded from local storage.
+  \item Store Post(s) - Store all posts along with its attributes: date, parent feed and read status.
+  \item Remove Old Post(s) - Remove old posts either on startup to lower memory usage, combined with removal of feed or removal of read posts.
+  \item Access Stored Post(s) - Load a stored post to avoid unnecessary fetch.
+  \item Mark Post as Read - Mark a post as read when it has been viewed by an user.
+\end{itemize}
+
+
+\subsection{View Feed(s)}
+The product shall give the user the ability to View feeds. This feature is a key feature for the product and has high priority.
+
+
+\subsubsection{Stimulus/Response Sequences}
+User triggered:
+\begin{itemize}
+  \item View Feed(s) - List all added feeds in an appropriate view where multiple feeds are visible at the same time.
+\end{itemize}
+System triggered:
+\begin{itemize}
+  \item Access Stored Feed(s) - Access locally stored feeds to be able to list them.
+\end{itemize}
+
+
+\subsection{View Statistics}
+The product should give the user the ability to View statistics gathered during the usage of the product. The statistics shall include how much time the user spends reading each post, viewing a feed, or category. It should also record the amount of re-reads of posts, amount of un-read posts marked as read, and read posts per day, week, month or forever. The statistics should be presented in such a way that the relevant information is shown. This feature is an optional feature for the product and has low priority.
+
+
+\subsubsection{Stimulus/Response Sequences}
+User triggered:
+\begin{itemize}
+  \item View Statistics - Lists all statistics recorded by the product since install.
+\end{itemize}
+System triggered:
+\begin{itemize}
+  \item Access Stored Feed(s) - Access locally stored feeds to accesses stored statistics gathered throughout the use.
+\end{itemize}
+
+
+\subsection{Import/Export Feed(s)}
+The product shall be able to import or export all feeds in a standardized way to, or from, other feed services. This feature is an optional feature for the product and has low priority.
+
+
+\subsubsection{Stimulus/Response Sequences}
+User triggered:
+\begin{itemize}
+  \item Import/Export Feed(s) - Combine all existing feed(s) into a standardized file format to be imported elsewhere. Import  is a way to mass-add feed(s).
+\end{itemize}
+System triggered:
+\begin{itemize}
+  \item Access Stored Feed(s) - Access locally stored feed(s).
+\end{itemize}
+
+
+\subsection{Find Similar Feed(s)}
+The product shall be able to look for similar feed(s) and present them to the user. This feature is an optional feature for the product and has low priority.
+
+
+\subsubsection{Stimulus/Response Sequences}
+User triggered:
+\begin{itemize}
+  \item Find Similar Feed(s) - Look for similar feeds by the use of online databases.
+\end{itemize}
+System triggered:
+\begin{itemize}
+  \item Access Stored Feed(s) - Access locally stored feed(s) to use as search term.
+\end{itemize}
+
+
+\subsection{Manage Feed(s)}
+The product shall give the user the ability to Add, Remove, Rename and Categorize feeds. Adding a feed shall require the product to first verify that the feed exists. The product shall store all feeds locally so that they can be accessed at a later time again. This feature, along with its sub-features, are key features for the product and have high priority.
+
+
+\subsubsection{Stimulus/Response Sequences}
+User triggered:
+\begin{itemize}
+  \item Add, Remove, Rename, Categorize - Options that should be accessible through the user interface in the appropriate view.
+\end{itemize}
+System triggered:
+\begin{itemize}
+  \item Categorize - All feeds should as default be categorized, either when added without category or at removal of category, to category \textit{Uncategorized}. This will guarantee that all feeds have a category assigned.
+  \item Verify Feed - The product shall verify that the RSS feed exists to complete an add feed operation.
+  \item Store Feed(s) - All feeds should be stored so that they can be accessed at a later time again.
+\end{itemize}
